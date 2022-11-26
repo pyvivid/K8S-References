@@ -1,2 +1,3 @@
 # k8s-manifests
-Sample manifests
+This repo consists of Sample manifests to be used for K8S.
+Also contains Kops sample scripts for deployments.
