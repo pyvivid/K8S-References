@@ -1,0 +1,23 @@
+## This is a sample manifest for creating a mySQL pod. 
+## Do not provide the secrets within this file.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dbpod
+spec:
+  containers:
+    - image: mysql:5.7
+      name: mysql
+      volumeMounts: 
+      - mountPath: /var/lib/mysql
+        name: dbvol
+      env:
+      - name: MYSQL_DATABASE
+        value: acccounts
+      - name: MYSQL_ROOT_PASSWORD
+        value: admin123
+  volumes:
+    - name: dbvol
+      hostPath:
+        path: /data
+        type: DirectoryOrCreate
