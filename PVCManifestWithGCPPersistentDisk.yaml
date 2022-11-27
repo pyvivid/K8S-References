@@ -1,3 +1,5 @@
+## This set of Defintion files, will create a new Persistent Disk on the GCP, assign it to the PVC and in turn will be assigned to the pod.
+
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -17,3 +19,23 @@ kind: StorageClass
 metadata:
  name: google-storage
 provisioner: kubernetes.io/gce-pd
+
+## Associated Pod Definition File
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: random-number-generator
+spec:
+  containers:
+  - name: alpine
+    image: alpine
+    command: ["/bin/sh", "-c"]
+    args: [shuf -i 0-100 -n 1 >> /opt/path]
+    volumeMounts:
+      - mountPath: /opt
+        name: data-volume
+    volumes:
+      - name: data-volume
+        persistentVolumeClaim:
+          claimName: myclaim
