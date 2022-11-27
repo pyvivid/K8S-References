@@ -1,7 +1,7 @@
 # k8s-manifests
 This repo consists of Sample </h3>PersistentVolume manifests</h3> to be used for K8S.
 
-</h3>PV Access Modes</h3></br>
+<h3>PV Access Modes</h3></br>
 > RWO - ReadWriteOnce -- the volume can be mounted as read-write by a single node</br> 
 > ROX - ReadOnlyMany - the volume can be mounted read-only by many nodes</br>
 > RWX - ReadWriteMany - the volume can be mounted as read-write by many nodes</br>
