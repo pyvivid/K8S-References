@@ -1,0 +1,9 @@
+## In configMaps instead of spec, we use data
+## Its important to 
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+ port: 6379
+ rdb_compression: yes
