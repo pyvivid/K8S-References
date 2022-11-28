@@ -1,0 +1,19 @@
+A configMap is an API object used to store non-confidential data in Key: Value Pairs.</br>
+
+A configMap is an API object that lets you store configuration for other objects to use.</br>
+
+A configMap allows you to decouple environment-specific configuration from your container-images, so that the applications are portable.</br>
+
+Pods can consume ConfigMaps as environment variables, command line arguments, or as configuration files in a volume.</br>
+
+Unlike other objects in Kubernetes, configMaps uses “data” rather than “spec”.</br>
+
+configMaps have “data” and “binary” fields.</br>
+
+The name of the configMaps must be a valid DNS subdomain name.</br>
+
+There are 4 different ways, you can you a configMap to configure a container inside a pod:</br>
+>> Inside a container command and args</br>
+>> Environment variables for a container</br>
+>> Add a file in read-only volume for the application to read.</br>
+>> Write a code within the Pod that uses the Kubernetes API to read a configMap.</br>
