@@ -1,11 +1,10 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: ingress-wear
+  name: ingress-wear-watch
 spec: 
   backend:
-    serviceName: wear-service
+    serviceName: watch-service
     servicePort: 80
 
- 
  

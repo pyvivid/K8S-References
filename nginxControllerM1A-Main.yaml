@@ -35,3 +35,6 @@ spec:
             containerPort: 80
           - name: https
             containerPort: 443
+        selector:
+          name: nginx-ingress
+          
