@@ -1,0 +1,6 @@
+## The configmap need not have entries at this point, just the file will do
+## Setting up config info will be a lot easier later.
+ apiVersion: v1
+ kind: ConfigMap
+ metadata:
+   name: nginx-configuration

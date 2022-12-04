@@ -1,0 +1,21 @@
+## Ingress Controller have additional intelligence in them to monitor the Ingress Resources.
+## Any changes in the environment, the ingress controller can automatically detect and edit
+## However the ingress controller needs a service account to perform this.
+## For this we create a ServiceAccount with the right roles and roles bindings
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-ingress
+spec:
+  type: NodePort
+  ports:
+  - name: http
+    port: 80
+    targetPort: 80
+    protocol: TCP
+  - name: https
+    port: 443
+    targetPort: 443
+    protocol: TCP
+  selector:
+    name: nginx-ingress
