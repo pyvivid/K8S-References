@@ -1,0 +1,31 @@
+Deployments are managed by the Kubernetes Deployment controller. Deployments are set of multiple, identical Pods with no unique identities. 
+A Deployment runs multiple replicas of your application and automatically replaces any instances that fail or become unresponsive. 
+In this way, Deployments help ensure that one or more instances of your application are available to serve user requests.
+
+Deployments use a Pod template, which contains a specification for its Pods. The Pod specification determines how each Pod should look like,
+what applications should run inside its containers, which volumes the Pods should mount, its labels, and more.
+
+Deployment Controller manages functions like:
+
+– Managing a set of pods in the form of Replica Sets & Hash-based labels
+– Rolling out new versions of application through new Replica Sets
+– Rolling back to old versions of application through old Replica Sets
+– Pause & Resume Rollout/Rollback functions
+– Scale-Up/Down functions
+
+Execute and Run the deployment by running command in same directory:
+
+$ kubectl create -f nginx-deploy.yaml
+
+When all replicas of the application are ready and available to users output of our deployment look like:
+
+Following command will show status of our deployments
+
+$ kubectl get deployments
+
+Output will look like:
+
+NAME               READY   UP-TO-DATE   AVAILABLE   AGE
+my-nginx-server    3/3     3            3           36s
+
+*** Refer to Sample 1 deployment controller manifest file ***
