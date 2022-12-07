@@ -1,0 +1,10 @@
+It is responsible for monitoring the status of replica sets and ensuring that the desired number of PODs are available at all times within the set. 
+If a POD dies it will create another POD. 
+It makes sure that desired number of PODs or at least one POD is in running state. 
+It has the capability to bring up or down the specified no of PODs.
+
+
+
+To create the replica controller run the following command:
+
+# kubectl create -f replicacontroller-definition.yml
