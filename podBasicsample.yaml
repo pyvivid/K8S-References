@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  # name and label are siblings
+  name: nginx
+  labels:
+    # app and tier are children of Labels
+    app: nginx
+    tier: frontend
+spec:
+  containers:
+    - name: nginx 
+      ## Image Name. If using repos other than Docker, mention full path
+      image: nginx 
+    - name: busybox
+      image: busybox
