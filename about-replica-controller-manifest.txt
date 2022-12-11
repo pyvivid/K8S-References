@@ -4,3 +4,8 @@ Replication Controller Vs Replica Set
 > Replication Controller is the older technology that is being replaced by Replica Set.
 > Replica Set is the new recommended way to set up replication.
 > There are minor differences in the way each works 
+> The selector is one of the major differences between Replication Controller and Replica Set.
+> Say for example, there were pods created before the creation of the 
+  Replica Set that match labels specified in the selector, the Replica Set will also take those pods into 
+  consideration when creating the replicas.
+> The selector is not a required field in case of a Replication Controller but it is still available.
