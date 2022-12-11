@@ -1,10 +1,6 @@
-It is responsible for monitoring the status of replica sets and ensuring that the desired number of PODs are available at all times within the set. 
-If a POD dies it will create another POD. 
-It makes sure that desired number of PODs or at least one POD is in running state. 
-It has the capability to bring up or down the specified no of PODs.
+Replication Controller Vs Replica Set
 
-
-
-To create the replica controller run the following command:
-
-# kubectl create -f replicacontroller-definition.yml
+> Both have the same purpose, but they're not the same.
+> Replication Controller is the older technology that is being replaced by Replica Set.
+> Replica Set is the new recommended way to set up replication.
+> There are minor differences in the way each works 
