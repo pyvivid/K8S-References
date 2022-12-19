@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapp-pod
+spec:
+  containers:
+    - name: dataprocessor
+      image: dataprocessor
+  affinity:
+    nodeaffinity:
+      # preferredDuringSchedulingIgnoredDuringExecution
+      # requiredDuringSchedulingRequiredDuringExecution
+      requiredDuringSchedulingIgnoreDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+            - key: size
+              operator: in
+              value: 
+                - Large
+                - Medium
