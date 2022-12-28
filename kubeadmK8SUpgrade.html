@@ -1,0 +1,41 @@
+<h1>Steps for Cluster Upgrades deployed using Kubeadm</h1>
+
+<h3>1. Upgrading the ControlPlane</h3>
+A. Drain the node of the pods first and make it unschedulable
+	# kubectl drain nodeName --ignore-daemonsets
+B. Update the base machine's OS
+	# apt-get update -y
+C. Update the kubeadm to the latest version
+	# apt-get install kubeadm=1.25.0-00
+D. Upgrade the Kubernetes Control Node
+	# kubeadm upgrade apply v1.25.0
+E. Update the Kubelet on the Node
+	# apt-get install kubelet=1.25.0-00
+F. Reload Daemon and kubelet
+	# systemctl daemon-reload
+	# systemctl restart kubelet
+	Note: Without above step F, the update will still show the older version
+	even if the kubernetes is upgraded.
+G. Uncordon the Node to ensure, pods are schedulable again.
+	# kubectl uncordon controlPlane
+
+<h3>2. Upgrading the Worker Node</h3>
+
+Login to the Node from the controlPlane or as appropriately
+
+A. Drain the node of the pods first and make it unschedulable
+	# kubectl drain nodeName --ignore-daemonsets
+B. Update the base machine's OS
+	# apt-get update -y
+C. Update the kubeadm to the latest version
+	# apt-get install kubeadm=1.25.0-00
+D. Upgrade the Kubernetes Control Node
+	# kubeadm upgrade workerNodeName
+E. Update the Kubelet on the Node
+	# apt-get install kubelet=1.25.0-00
+F. Reload Daemon and kubelet
+	# systemctl daemon-reload
+	# systemctl restart kubelet
+	Note: Without above step F, the update will still show the older version
+G. Uncordon the Node to ensure, pods are schedulable again.
+	# kubectl uncordon workerNodeName
