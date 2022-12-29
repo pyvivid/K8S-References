@@ -30,7 +30,7 @@ B. Update the base machine's OS
 C. Update the kubeadm to the latest version
 	# apt-get install kubeadm=1.25.0-00
 D. Upgrade the Kubernetes Control Node
-	# kubeadm upgrade workerNodeName
+	# kubeadm upgrade node // This is not nodeName
 E. Update the Kubelet on the Node
 	# apt-get install kubelet=1.25.0-00
 F. Reload Daemon and kubelet
