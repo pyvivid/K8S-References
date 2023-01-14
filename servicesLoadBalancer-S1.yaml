@@ -4,7 +4,9 @@ metadata:
   name: helloworld-service
 spec: 
   ports:
+    ## Port stands for Front-end Port
   - port: 80
+    ## TargetPort stands for Backend Port
     targetPort: vproapp-port
     protocol: TCP
   selector:
