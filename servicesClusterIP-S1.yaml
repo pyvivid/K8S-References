@@ -1,20 +1,20 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: back-end
+  name: app-service
 spec:
   # Cluster IP is the default service, even if none was mentioned, it is taken as a default value.
   type: ClusterIP
   ports:
-  - port: 80
-    targetPort: 80
+  - port: 8080
+    targetPort: 8080
     protocol: TCP
     # If you set the `spec.type` field to `NodePort` and you want a specific port number,
     # you can specify a value in the `spec.ports[*].nodePort` field.
   selector:
   # Values for the selector are taken from the pod definition file.
     app: myapp
-    name: back-end
+    type: back-end
 
 ## Associated Pod Definition file for reference
 apiVersion: v1
