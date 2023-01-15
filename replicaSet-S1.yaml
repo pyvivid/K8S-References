@@ -7,18 +7,18 @@ metadata:
     type: front-end
 spec: 
   # The below line specifies the total numbe rof pods to be running at any given time.
-  replicas: 3 
+  replicas: 3
+  selector:
+    matchlabels:
+      ## Note: The below label matches with the label info from the spec.template.metadata.labels.type.
+      type: front-end
   template:
     metadata:
-      name: myapp-pod
       labels:
-        name: myapp
+        name: myapp-pod
         type: front-end
     spec:
       containers:
       - name: nginx-controller
         image: nginx
- selector:
-    matchlabels:
-      ## Note: The below label matches with the label info from the spec.template.metadata.labels.type.
-      type: front-end
+ 
