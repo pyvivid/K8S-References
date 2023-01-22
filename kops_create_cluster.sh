@@ -1,1 +1,1 @@
-## Before using this script ref to kops-domain-setup
+## Before using this script ref to kops-dom-srv-gce-setup.txt
