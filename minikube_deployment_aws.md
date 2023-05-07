@@ -28,7 +28,7 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin 
 # Commands to run post docker installation
 sudo systemctl status docker
 sudo systemctl enable --now docker
-sudo usermod -aG docker ec2-user
+sudo usermod -aG docker $USER
 newgrp docker
 sudo systemctl restart docker
 docker ps
