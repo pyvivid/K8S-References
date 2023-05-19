@@ -87,3 +87,11 @@ rm -f crictl-$VERSION-linux-amd64.tar.gz
 ```
 minikube start --vm-driver=none
 ```
+### Test the setup
+```
+kubectl run hello-minikube --image=gcr.io/google_containers/echoserver:1.4 --port=8080
+kubectl expose pod hello-minikube --type=NodePort
+
+```
+### Authors
+Vinod Vincent + Infratute.com
