@@ -83,6 +83,10 @@ sudo tar zxvf crictl-$VERSION-linux-amd64.tar.gz -C /usr/local/bin
 rm -f crictl-$VERSION-linux-amd64.tar.gz
 ```
 ------------------------------------------------------------------
+
+### Installing cri-dockerd
+install -o root -g root -m 0755 bin/cri-dockerd /usr/local/bin/cri-dockerd
+
 ### Starting minikube
 ```
 minikube start --vm-driver=none
