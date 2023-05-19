@@ -65,7 +65,7 @@ systemctl enable --now cri-docker.socket
 
 ------------------------------------------------------------------
 
-### Installing crictl:
+### Installing crictl(Use either the Curl or wget):
 
 ### Using Curl:
 
