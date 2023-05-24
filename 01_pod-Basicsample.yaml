@@ -25,5 +25,4 @@ spec:
       image: nginx 
    
 Command to Execute this pod definition file:
-
-** # kubectl apply/create -f pod-def_file_name.yaml **
+# kubectl apply/create -f pod-def_file_name.yaml
