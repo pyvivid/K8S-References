@@ -1,0 +1,26 @@
+# apiVersion is a String Value
+apiVersion: v1
+# Kind is a String Value
+kind: Pod
+metadata:
+  # Metadata is a Dictionary # name and label are siblings
+  # This name is a String value which represents the name of the Pod
+  # Metadata Values are predefined. No random values can be assigned
+  name: myapp-pod
+  labels:
+    # Labels is a dictionary within a dictionary. The Key and value can be anything.
+    # app and tier are children of Labels
+    # This app represents the app to which the pod and container belongs  
+    app: myapp
+    # Grouping the pods is important for better management.This represents the tier. 
+    tier: frontend
+spec:
+  # Spec is a Dictionary. Spec contents can vary depending on the type of Kind/Objects.
+  # Container is a property. Container itself is an List/Array, since the pods can have multiple containers within them.
+  containers:
+    # The name below represents the name of the container that will be running within the pod 
+    # The - before the first item indicates this is the first item in the list. The item in the list is also a dictionary.
+    - name: nginx-container
+      ## Image Name. If using repos other than Docker, mention full path
+      image: nginx 
+   
