@@ -9,6 +9,7 @@ metadata:
 spec: 
   # The below line specifies the total numbe rof pods to be running at any given time.
   replicas: 3
+  # The replicaset requires the selector section.
   selector:
     matchlabels:
       ## Note: The below label matches with the label info from the spec.template.metadata.labels.type.
