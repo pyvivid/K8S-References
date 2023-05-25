@@ -1,3 +1,4 @@
+# Note: The apiVersion for replicaset is apps/v1
 apiVersion: apps/v1
 kind: ReplicaSet
 metadata: 
