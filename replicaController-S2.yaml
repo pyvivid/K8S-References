@@ -1,3 +1,4 @@
+# The apiVersion for the Replication Controller is v1
 apiVersion: v1
 kind: ReplicaController
 metadata:
