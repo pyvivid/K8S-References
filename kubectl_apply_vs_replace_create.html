@@ -1,16 +1,16 @@
-<p>Understanding the differences between&#160;<br>
- kubectl apply<br>
- kubectl create<br>
- kubectl replace<br>
-is crucial for managing the Kubernetes resources effectively.</p>
+Understanding the differences between
+    kubectl apply
+    kubectl create
+    kubectl replace
+is crucial for managing the Kubernetes resources effectively.
 
-<p>kubectl create is an imperative command that creates a new resource.&#160;However, it fails if the resource already exists.&#160;<br>
-kubectl replace is also imperative and replaces the existing resource with a new one. It creates a new resource if it doesn&rsquo;t exist yet.</p>
+kubectl create is an imperative command that creates a new resource. However, it fails if the resource already exists.
+kubectl replace is also imperative and replaces the existing resource with a new one. It creates a new resource if it doesn't exist yet.
 
-<p>kubectl apply is a declarative command that manages applications through files defining the resource. It creates the resource if it doesn&rsquo;t exist, and if it does, the resource is automatically updated. This is why kubectl apply is often preferred over kubectl create and kubectl replace as it allows management of resources in a more controlled and predictable manner.</p>
+kubectl apply is a declarative command that manages applications through files defining the resource. It creates the resource if it doesn't exist, and if it does, the resource is automatically updated. This is why kubectl apply is often preferred over kubectl create and kubectl replace as it allows management of resources in a more controlled and predictable manner.
 
-<p>The syntax for kubectl apply is pretty straightforward<br>
-# kubectl apply -f FILENAME<br>
-e.g. # kubectl apply -f my-app-config.yml</p>
+The syntax for kubectl apply is pretty straightforward
+# kubectl apply -f FILENAME
+e.g. # kubectl apply -f my-app-config.yml
 
-<p>Lets say you want to update the image version within a pod, then we update the manifest file and run the &quot;kubectl apply&quot; to update the images in realtime.</p>
+Lets say you want to update the image version within a pod, then we update the manifest file and run the "kubectl apply" to update the images in realtime.
