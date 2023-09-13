@@ -1,28 +1,19 @@
-# apiVersion is a String Value
-apiVersion: v1
-# Kind is a String Value
-kind: Pod
-metadata:
-  # Metadata is a Dictionary # name and label are siblings
-  # This name is a String value which represents the name of the Pod
-  # Metadata Values are predefined. No random values can be assigned
-  name: myapp-pod
-  labels:
-    # Labels is a dictionary within a dictionary. The Key and value can be anything.
-    # app and tier are children of Labels
-    # This app represents the app to which the pod and container belongs  
-    app: myapp
-    # Grouping the pods is important for better management.This represents the tier. 
-    tier: frontend
-spec:
-  # Spec is a Dictionary. Spec contents can vary depending on the type of Kind/Objects.
-  # Container is a property. Container itself is an List/Array, since the pods can have multiple containers within them.
-  containers:
-    # The name below represents the name of the container that will be running within the pod 
-    # The - before the first item indicates this is the first item in the list. The item in the list is also a dictionary.
-    - name: nginx-container
-      ## Image Name. If using repos other than Docker, mention full path
-      image: nginx 
-   
-Command to Execute this pod definition file:
-# kubectl apply/create -f pod-def_file_name.yaml
+apiVersion: v1              # apiVersion is a String Value. Values depend on the type of kind being defined. 
+                            # E.g. Service = v1 | Pod = v1 | ReplicaSet = apps/v1 | Deployment = apps/v1
+kind: Pod                   # Kind is a String Value # kubectl api-resources = use this command to get full list
+metadata:                   # Metadata is a Dictionary # name and label are siblings. Metadata Values are predefined. No random values can be assigned
+  name: myapp-pod           # This name is a String value which represents the name of the Pod
+  labels:                   # Labels is a dictionary within a dictionary. The Key and value can be anything. app and tier are children of Labels
+    app: myapp              # This app represents the app to which the pod and container belongs             
+    tier: frontend          # Grouping the pods is important for better management.This represents the tier. 
+spec:                       # Spec is a Dictionary. Spec contents can vary depending on the type of Kind/Objects.
+  containers:               # Container is a property. Container itself is an List/Array, since the pods can have multiple containers within them.
+    - name: nginx-container # The - before the first item indicates this is the first item in the list. The item in the list is also a dictionary.
+      image: nginx          # Image Name. If using repos other than Docker, mention full path  
+                            # Command to Execute this pod definition file = # kubectl apply/create -f pod-def_file_name.yaml
+                            # To Find the apiVersion = # kubectl get pod -o=custom-columns=NAME:.metadata.name,API-version:.metadata.owner_references[].api_version
+                            # Alternatively, If the you know what resource you are searching for then just filter it from the list using grep:
+                            # kubectl api-resources | grep the_resource_name_you_want
+                            # kubectl api-resources | grep persistentvolumes
+                            # Result:     deployments     deploy    apps/v1     true         Deployment
+                            # Official Doc: https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.23/#-strong-api-overview-strong-
