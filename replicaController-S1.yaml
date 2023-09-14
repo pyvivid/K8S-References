@@ -7,7 +7,7 @@ metadata:
     app: myapp
     type: front-end
 spec:
-  replicas: <Replicas>
+  replicas: <Number of Replicas>
   selector:
     app: myapp
   template:
