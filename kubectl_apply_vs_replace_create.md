@@ -33,4 +33,9 @@ You can then edit and save the changes you made back the Kubernetes API, which t
 hence we lose track of the changes effected at each stage.
 To mitigate this, when using the Kubectl edit, use the kubetl replace command to effect the changes, so that the configuration changes are captured into the live definition file.
 
+`# kubectl edit deployment nginx
+# kubectl replace -f nginx.yaml
+# kubectl replace --force -f nginx.yaml
+`
+
 
