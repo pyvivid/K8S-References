@@ -42,4 +42,7 @@ To Update the objects(Imperative Approach):
 `# kubectl replace -f nginx.yaml`<br>
 `# kubectl replace --force -f nginx.yaml`<br>
 
+**kubectl create** will fail if the object already exists.
+**kubectl replace** will fail if the object does not exist already.
+
 
