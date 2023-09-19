@@ -1,11 +1,12 @@
 # Kubectl apply vs edit vs replace
+
 Kubernetes provides several methods to create and update resources using apply, edit, patch, and replace.
 Understanding the differences between
-    kubectl apply
-    kubectl create
-    kubectl edit
-    kubectl replace
-    kubectl patch
++ kubectl apply
++ kubectl create
++ kubectl edit
++ kubectl replace
++ kubectl patch
 is crucial for managing the Kubernetes resources effectively.
 
 kubectl apply is a declarative command that manages applications through files defining the resource. 
