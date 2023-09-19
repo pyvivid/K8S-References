@@ -13,10 +13,10 @@ kubectl apply is a declarative command that manages applications through files d
 It reads the manifest file and creates the resource if it doesn't exist, and if it does, the resource is automatically updated. 
 This is why kubectl apply is often preferred over kubectl create and kubectl replace as it allows management of resources in a more controlled and predictable manner.
 The syntax for kubectl apply is pretty straightforward
-...
-# kubectl apply -f FILENAME
-...
+
+`# kubectl apply -f FILENAME`
 e.g. # kubectl apply -f my-app-config.yml
+
 Lets say you want to update the image version within a pod, then we update the manifest file and run the "kubectl apply" to update the images in realtime.
 
 kubectl create is an imperative command that creates a new resource. However, it fails if the resource already exists.
