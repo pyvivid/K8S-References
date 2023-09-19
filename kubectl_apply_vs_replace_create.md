@@ -6,7 +6,7 @@ Understanding the differences between
 + kubectl create
 + kubectl edit
 + kubectl replace
-+ kubectl patch/br
++ kubectl patch<br>
 is crucial for managing the Kubernetes resources effectively.
 
 kubectl apply is a declarative command that manages applications through files defining the resource. 
@@ -33,8 +33,8 @@ You can then edit and save the changes you made back the Kubernetes API, which t
 hence we lose track of the changes effected at each stage.
 To mitigate this, when using the Kubectl edit, use the kubetl replace command to effect the changes, so that the configuration changes are captured into the live definition file.
 
-`# kubectl edit deployment nginx`
-`# kubectl replace -f nginx.yaml`
-`# kubectl replace --force -f nginx.yaml`
+`# kubectl edit deployment nginx`<br>
+`# kubectl replace -f nginx.yaml`<br>
+`# kubectl replace --force -f nginx.yaml`<br>
 
 
