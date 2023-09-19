@@ -25,5 +25,7 @@ If any changes have occurred between reading and replacing the resource, the rep
 
 kubectl edit command will read the resource from the Kubernetes API, writes the resource specs into a local file, and opens that file up in a text editor for you.
 You can then edit and save the changes you made back the Kubernetes API, which takes care of effecting the changes in the edit.
+***When using the kubectl edit command the changes effected using the edit, is not stored permanently into the configuration file and 
+hence we lose track of the changes effected at each stage.
 
 
