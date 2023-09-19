@@ -2,8 +2,8 @@ Kubernetes provides several methods to create and update resources using apply, 
 Understanding the differences between
     kubectl apply
     kubectl create
-    kubectl replace
     kubectl edit
+    kubectl replace
     kubectl patch
 is crucial for managing the Kubernetes resources effectively.
 
@@ -27,5 +27,6 @@ kubectl edit command will read the resource from the Kubernetes API, writes the 
 You can then edit and save the changes you made back the Kubernetes API, which takes care of effecting the changes in the edit.
 ***When using the kubectl edit command the changes effected using the edit, is not stored permanently into the configuration file and 
 hence we lose track of the changes effected at each stage.
+To mitigate this, when using the Kubectl edit, use the kubetl replace command to effect the changes, so that the configuration changes are captured into the live definition file.
 
 
