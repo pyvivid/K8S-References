@@ -1,6 +1,6 @@
 # <p style="text-align: center;">Kubectl apply vs edit vs replace(Imperative Vs Declarative Approach)</p>
 
-Kubernetes provides several methods to create and update resources using apply, edit, patch, and replace.
+Kubernetes provides several methods to create and update resources using apply, edit, patch, and replace.<br>
 Understanding the differences between
 + kubectl apply
 + kubectl create
@@ -9,12 +9,13 @@ Understanding the differences between
 + kubectl patch<br>
 is crucial for managing the Kubernetes resources effectively.
 
-kubectl apply is a declarative command that manages applications through files defining the resource. 
-It reads the manifest file and creates the resource if it doesn't exist, and if it does, the resource is automatically updated. 
-This is why kubectl apply is often preferred over kubectl create and kubectl replace as it allows management of resources in a more controlled and predictable manner.
-The syntax for kubectl apply is pretty straightforward
+kubectl apply 
+* is a declarative command that manages applications through files defining the resource. 
+* reads the manifest file and creates the resource if it doesn't exist, and if it does, the resource is automatically updated. 
+This is why kubectl apply is often preferred over kubectl create and kubectl replace as it allows management of resources in a more controlled and predictable manner.<br>
 
-`# kubectl apply -f FILENAME`
+The syntax for kubectl apply is pretty straightforward<br>
+`# kubectl apply -f FILENAME`<br>
 e.g. # kubectl apply -f my-app-config.yml
 
 Lets say you want to update the image version within a pod, then we update the manifest file and run the "kubectl apply" to update the images in realtime.
@@ -45,4 +46,13 @@ To Update the objects(Imperative Approach):
 **kubectl create** will fail if the object already exists.<br>
 **kubectl replace** will fail if the object does not exist already.
 
+Meanwhile, the Imperative commands can be used for getting tasks done quickly as well as generate a definition template easliy.
+If you want to test your command but not create the resources, then
+`# kubectl run pod_name --image=image_name --dry-run=client` 
+will tell, if the resource can be created with your command successfully, without having created your objects.
+
+Let us say, we want to generate a definition file to build up on, we can use
+`# kubectl run pod_name --image=image_name --dry-run=client -o yaml > def_file_to_be_created.yaml` - wil create a pod definition template and store it in a file.
+`# kubectl create deployment deployment_name --image=image_name --dry-run=client -o yaml > def_file_to_be_created.yaml` - will create a deployment definition file.
+`# kubectl create deployment deployment_name --image=image_name --replicas=4 --dry_run=client -o yaml > def_file_to_be_created.yaml` - will create a deployment definition file with 4 replicas.
 
