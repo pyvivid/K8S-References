@@ -1,4 +1,4 @@
-# Kubectl apply vs edit vs replace
+# <p style="text-align: center;">Kubectl apply vs edit vs replace(Imperative Vs Declarative Approach)</p>
 
 Kubernetes provides several methods to create and update resources using apply, edit, patch, and replace.
 Understanding the differences between
