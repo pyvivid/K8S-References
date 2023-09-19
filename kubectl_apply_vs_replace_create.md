@@ -6,7 +6,7 @@ Understanding the differences between
 + kubectl create
 + kubectl edit
 + kubectl replace
-+ kubectl patch
++ kubectl patch/br
 is crucial for managing the Kubernetes resources effectively.
 
 kubectl apply is a declarative command that manages applications through files defining the resource. 
