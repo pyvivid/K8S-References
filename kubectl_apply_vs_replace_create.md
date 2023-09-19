@@ -44,15 +44,15 @@ To Update the objects(Imperative Approach):
 `# kubectl replace --force -f nginx.yaml`<br>
 
 **kubectl create** will fail if the object already exists.<br>
-**kubectl replace** will fail if the object does not exist already.
+**kubectl replace** will fail if the object does not exist already.<br>
 
-Meanwhile, the Imperative commands can be used for getting tasks done quickly as well as generate a definition template easliy.
-If you want to test your command but not create the resources, then
-`# kubectl run pod_name --image=image_name --dry-run=client` 
-will tell, if the resource can be created with your command successfully, without having created your objects.
+Meanwhile, the Imperative commands can be used for getting tasks done quickly as well as generate a definition template easliy.<br>
+If you want to test your command but not create the resources, then<br>
+`# kubectl run pod_name --image=image_name --dry-run=client` <br>
+will tell, if the resource can be created with your command successfully, without having created your objects.<br>
 
-Let us say, we want to generate a definition file to build up on, we can use
-`# kubectl run pod_name --image=image_name --dry-run=client -o yaml > def_file_to_be_created.yaml` - wil create a pod definition template and store it in a file.
-`# kubectl create deployment deployment_name --image=image_name --dry-run=client -o yaml > def_file_to_be_created.yaml` - will create a deployment definition file.
-`# kubectl create deployment deployment_name --image=image_name --replicas=4 --dry_run=client -o yaml > def_file_to_be_created.yaml` - will create a deployment definition file with 4 replicas.
+Let us say, we want to generate a definition file to build up on, we can use<br>
+`# kubectl run pod_name --image=image_name --dry-run=client -o yaml > def_file_to_be_created.yaml` - wil create a pod definition template and store it in a file.<br>
+`# kubectl create deployment deployment_name --image=image_name --dry-run=client -o yaml > def_file_to_be_created.yaml` - will create a deployment definition file.<br>
+`# kubectl create deployment deployment_name --image=image_name --replicas=4 --dry_run=client -o yaml > def_file_to_be_created.yaml` - will create a deployment definition file with 4 replicas.<br>
 
