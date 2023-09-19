@@ -12,7 +12,6 @@ We create a pod  definition file, explicitly specifying the nodeSeletor in the s
 ### Scenario 2:<br>
 If our pod is already running on a specific node and we wish to move the pod from one node to another then,<br>
 We create a pod binding definition file, convert from yaml to JSON and then provide it as a binding object to the original pod definition file.<br>
-![Manual Scheduling2](https://github.com/pyvivid/K8S-References/assets/94853400/311664fa-8b1e-49b9-97d6-453816844e80)<br>
+![ms](https://github.com/pyvivid/K8S-References/assets/94853400/2eaace3a-37d0-418a-a764-b2f077e856ab)<br>
 ![Manual Scheduling1](https://github.com/pyvivid/K8S-References/assets/94853400/27dbc46f-2af8-487b-abde-d782e4a45e84)<br>
 ![Manual Scheduling](https://github.com/pyvivid/K8S-References/assets/94853400/e4cb6bfe-fdbe-439a-8ff7-5c52d7ed971e)<br>
-
