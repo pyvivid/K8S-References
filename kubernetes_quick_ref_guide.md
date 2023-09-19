@@ -1,7 +1,7 @@
 #                                                                 Kubernetes Quick Reference Guide:
 
 Kubernetes has:
-  1.	Master Node running Control Plane Components
+  **1.	Master Node running Control Plane Components**
   2.	Worker Nodes running Kubelet + Kubeproxy + Pods that host the containers within them.
 The Master node hosts the Control Plane Components which include:
   1.	Kube API Server: All interactions to the Cluster occurs through the Kube API Server.
