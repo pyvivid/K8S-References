@@ -28,8 +28,15 @@ To put the selector to use, test using the following command.<br>
 
 ## Usage example 2:
 
-Kubernetes uses labels and Selectors to connect different objects together.
-Now that the pods have been created with labels, we can use the selectors within the replicaSet to group the pods.
+Kubernetes uses labels and Selectors to connect different objects together.<br>
+Now that the pods have been created with labels, we can use the selectors within the replicaSet to group the pods.<br>
+Important point to note:<br>
+
++ The labels in the metadata of the replicaset does not add value at the moment, however will be put to use only when we configure someother object, to discover the replicaSet.
++ We need to focus on getting the replicaSet to discover the pod.
++ All the pods which match the label tier:front-end, will be a part of the replicaset.
++ The label in the pod template and the selector section of the spec must match.<br>
+  
 ![3](https://github.com/pyvivid/K8S-References/assets/94853400/30e0e011-1cd3-4eb7-8577-4241e76f86a4)<br>
 
 
