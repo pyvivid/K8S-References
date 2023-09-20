@@ -38,7 +38,7 @@ Important point to note:<br>
 
 Assuming the pods have been created and so are the replicas, we now want to position a service in front of the pods within the replicaSet.
 To achieve this:
-+ We need to create a service definition file in such a way, that the spec.selector.app:App1 must match the spec.template.metadata.labels.app:App1<br>
++ We need to create a service definition file in such a way, that the **spec.selector.app:App1** must match the **spec.template.metadata.labels.app:App1**<br>
 ![4](https://github.com/pyvivid/K8S-References/assets/94853400/7d4a475d-f987-4357-a933-cc0b8b0c1817)
 
 
