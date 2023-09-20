@@ -39,7 +39,8 @@ If we want the pods to be placed on **a particular node only**, then we will hav
 
 When a kubernetes cluster is first setup, a taint is to be set on the Master Node automatically.
 To see if a node is tainted:<br>
-`# kubectl describe node node_name | grep -i taint`
+`# kubectl describe node node_name | grep -i taint`<br>
+<br>
 ![6](https://github.com/pyvivid/K8S-References/assets/94853400/702322e4-e253-40a2-8132-f1b25838a6d3)
 
 
