@@ -15,3 +15,17 @@ Only the following objects support Labels and Selectors:<br>
   + DaemonSets
   + Jobs
 
+## Usage example 1:
+
+In a pod definition file, under metadata section, create a section called labels and under the labels add, labels in "key:value" format.<br>
+![1](https://github.com/pyvivid/K8S-References/assets/94853400/9351c908-ed4e-4c00-855f-d020f4772feb)<br>
+To put the selector to use, test using the following command.<br>
++ `# kubectl get pods --show-labels`
++ `# kubectl get pods --selector app=App1`
++ `# kubectl get pods --selector rel=dev`
++ `# kubectl get pods --selector app=App1,rel=dev`<br>
+<br>
+![2](https://github.com/pyvivid/K8S-References/assets/94853400/a38008cc-48c5-4c48-8f51-604b0efdc224)
+
+
+
