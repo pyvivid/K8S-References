@@ -29,7 +29,7 @@ To put the selector to use, test using the following command.<br>
 ## Usage example 2:
 
 Now that the pods have been created with labels, we can use the selectors within the replicaSet to group the pods.
-![3](https://github.com/pyvivid/K8S-References/assets/94853400/350a2f9a-3d42-454f-8ab9-466b32eb9ad1)<br>
+![3](https://github.com/pyvivid/K8S-References/assets/94853400/30e0e011-1cd3-4eb7-8577-4241e76f86a4)<br>
 
 
 
