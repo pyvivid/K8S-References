@@ -35,5 +35,5 @@ Once a node is tainted, no pods can be scheduled on it.<br>
 then a toleration is placed on Pod A. Now when the scheduler, tries to place the pod A on node 1, it will be scheduled successfully.<br>
 **Part 3:** Though the Pod A is set with a toleration on node 01, the pod A, may be still be placed on node02 or node03, since the node02 and node03, do not have any taints on them.<br>
 Taints and Tolerations, do not tell a pod to go to a particular node, instead, it telss the node to accept only the pods with a certain tolerations.<br>
-If we want the pods to be placed on a particular node only, then we will have to use nodeaffinity.
+If we want the pods to be placed on **a particular node only**, then we will have to use **nodeaffinity**.
 
