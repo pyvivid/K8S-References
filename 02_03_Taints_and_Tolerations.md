@@ -37,3 +37,6 @@ then a toleration is placed on Pod A. Now when the scheduler, tries to place the
 Taints and Tolerations, do not tell a pod to go to a particular node, instead, it telss the node to accept only the pods with a certain tolerations.<br>
 If we want the pods to be placed on **a particular node only**, then we will have to use **nodeaffinity**.
 
+When a kubernetes cluster is first setup, a taint is to be set on the Master Node automatically.
+To see if a taint 
+
