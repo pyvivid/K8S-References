@@ -5,6 +5,8 @@ Taints and Tolerations are used to set restrictions on what pods can be schedule
 Points to note:
 
 ### Taints are set on nodes.
+### + Tolerations are set on pods.
+
 `# kubectl taint nodes node-name key=value:taint-effect`<br>
 `# kubectl taint node node01 app=blue:NoSchedule`
 
@@ -14,10 +16,9 @@ Points to note:
 + NoExecute = New Pods will not be scheduled on this node and existing pods will be evicted, if the already running pods, do not tolerate the taint.
 
 Sample Definition file:<br>
-![5](https://github.com/pyvivid/K8S-References/assets/94853400/102e057e-24ec-4c2c-aced-f872f3466a75)
-The values Key, Operator, value and effect, should all be enclosed within quotes as in the above image.
+![5](https://github.com/pyvivid/K8S-References/assets/94853400/102e057e-24ec-4c2c-aced-f872f3466a75)<br>
 
-### + Tolerations are set on pods.
+The values Key, Operator, value and effect should all be enclosed within quotes as in the above image.
 
 ### Use case scenario 1:
 
@@ -32,4 +33,7 @@ Once a node is tainted, no pods can be scheduled on it.
 **Part 1:** Lets assume that node 1 is now tainted and no pods can be placed on it, unless the pod can tolerate the taint.
 **Part 2:** We need to enable certain pods to be placed on the node and the pods are tolerant to this particular taint. Assume that pod A is only to be allowed to be placed on the node 1, 
 then a toleration is placed on Pod A. Now when the scheduler, tries to place the pod A on node 1, it will be scheduled successfully.
+**Part 3:** Though the Pod A is set with a toleration on node 01, the pod A, may be still be placed on node02 or node03, since the node02 and node03, do not have any taints on them.
+Taints and Tolerations, do not tell a pod to go to a particular node, instead, it telss the node to accept only the pods with a certain tolerations.
+If we want the pods to be placed on a particular node only, then we will have to use nodeaffinity.
 
