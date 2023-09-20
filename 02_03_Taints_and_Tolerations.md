@@ -5,7 +5,7 @@ Taints and Tolerations are used to set restrictions on what pods can be schedule
 Points to note:<br>
 
 ### Taints are set on nodes.<br>
-### + Tolerations are set on pods.<br>
+### Tolerations are set on pods.<br>
 
 `# kubectl taint nodes node-name key=value:taint-effect`<br>
 `# kubectl taint node node01 app=blue:NoSchedule`
