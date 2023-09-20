@@ -43,4 +43,9 @@ To see if a node is tainted:<br>
 <br>
 ![6](https://github.com/pyvivid/K8S-References/assets/94853400/702322e4-e253-40a2-8132-f1b25838a6d3)
 
+## To untaint a node:
+
+Notice the "-" at the end of NoSchedule.
+![image](https://github.com/pyvivid/K8S-References/assets/94853400/9824ba54-f6b0-49e4-b844-f1ebf0e489bb)
+
 
