@@ -5,21 +5,18 @@ Taints and Tolerations are used to set restrictions on what pods can be schedule
 Points to note:
 
 ### Taints are set on nodes.
-`# kubectl taint nodes node-name key=value:taint-effect`
+`# kubectl taint nodes node-name key=value:taint-effect`<br>
 `# kubectl taint node node01 app=blue:NoSchedule`
 
 ### Taint-effects:
 + NoSchedule = Pods will not be placed at all on this node
 + PreferNoSchedule = Pods will not be placed, but not guaranteed
-+ NoExecute = New Pods will not be scheduled on this node and existing pods will be evicted, if the already running pods, do not tolerate the taint
-
++ NoExecute = New Pods will not be scheduled on this node and existing pods will be evicted, if the already running pods, do not tolerate the taint.
 
 Sample Definition file:
+![5](https://github.com/pyvivid/K8S-References/assets/94853400/102e057e-24ec-4c2c-aced-f872f3466a75)
 
-![5](https://github.com/pyvivid/K8S-References/assets/94853400/36b365fe-c914-48ef-98b2-22d4dbff7cf6)
-
-
-## + Tolerations are set on pods.
+### + Tolerations are set on pods.
 
 ### Use case scenario 1:
 
