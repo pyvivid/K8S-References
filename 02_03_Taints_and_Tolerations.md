@@ -13,8 +13,9 @@ Points to note:
 + PreferNoSchedule = Pods will not be placed, but not guaranteed
 + NoExecute = New Pods will not be scheduled on this node and existing pods will be evicted, if the already running pods, do not tolerate the taint.
 
-Sample Definition file:
+Sample Definition file:<br>
 ![5](https://github.com/pyvivid/K8S-References/assets/94853400/102e057e-24ec-4c2c-aced-f872f3466a75)
+The values Key, Operator, value and effect, should all be enclosed within quotes as in the above image.
 
 ### + Tolerations are set on pods.
 
