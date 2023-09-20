@@ -23,7 +23,7 @@ To put the selector to use, test using the following command.<br>
 + `# kubectl get pods --show-labels`
 + `# kubectl get pods --selector app=front-end`
 + `# kubectl get pods --selector rel=dev`
-+ `# kubectl get pods --selector app=App1,rel=dev`<br>
++ `# kubectl get pods --selector app=front-end,rel=dev`<br>
 ![2](https://github.com/pyvivid/K8S-References/assets/94853400/d7a1f2a6-f3b6-4497-9b58-5fe8cbe9f599)<br>
 
 
