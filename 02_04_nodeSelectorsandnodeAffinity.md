@@ -14,5 +14,4 @@ E.g. <br>
 `# kubectl label node node01 size=Large`<br>
 
 We can now use this within the pod definition file to place the pods on a specific size.<br>
-![7](https://github.com/pyvivid/K8S-References/assets/94853400/d3c26507-ea89-4b7c-96ad-b182af60acfd)<br>
-
+![7](https://github.com/pyvivid/K8S-References/assets/94853400/d73cdb3e-a349-40e4-a1e9-b610fe25fc10)<br>
