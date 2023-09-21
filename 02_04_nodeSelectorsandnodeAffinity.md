@@ -31,10 +31,21 @@ Notice the spec.affinity.nodeAffinity:
 
 - requiredDuringSchedulingIgnoredDuringExecution = The scheduler can't schedule the Pod unless the rule is met.
 - preferredDuringSchedulingIgnoredDuringExecution = The scheduler tries to find a node that meets the rule. If a matching node is not available, the scheduler still schedules the Pod.
+- requiredDuringSchedulingRequiredDuringExecution - Upcoming, not yet implemented
 
 The Structure of using nodeAffinity is as: spec.affinity.nodeAffinity.requireDuringSchedulingIgnoreDuringExecution.matchExpresssions.key, operator, values.
 -matchExpressions = List
 -values = List
+
+Acceptable operator values are:
+
+You can use the operator field to specify a logical operator for Kubernetes to use when interpreting the rules. 
+You can use 
+ + In
+ + NotIn
+ + Exists
+ + DoesNotExist
+ + Gt and Lt.
 
 The Structure of using podAffinity is as: spec.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution.-labelSelector.matchExpressions.-key, operator, values: -store.
 
