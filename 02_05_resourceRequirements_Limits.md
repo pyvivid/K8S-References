@@ -11,8 +11,32 @@ Each of the container will be having
 + Resource Limits.<br>
 
 A sample usage is as below:<br>
-
-![image](https://github.com/pyvivid/K8S-References/assets/94853400/2a1b3cfc-23dd-4aed-ad03-5281e9a283fb)
+```ruby
+apiVersion: v1
+kind: Pod
+metadata:
+  name: frontend
+spec:
+  containers:
+  - name: app
+    image: images.my-company.example/app:v4
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+  - name: log-aggregator
+    image: images.my-company.example/log-aggregator:v6
+    resources:
+      requests:
+        memory: "64Mi"
+        cpu: "250m"
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+```
 
 A few points to remember:
 + G is Gigabyte, which equals to 1000 MB.
