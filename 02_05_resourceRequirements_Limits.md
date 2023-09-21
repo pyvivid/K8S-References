@@ -30,8 +30,8 @@ A few points to remember:
 ## Setting the LimitRange for a nameSpace:
 
 Step 1: Create a LimitRange.yaml file as below:
-```
-...
+
+```ruby
 apiVersion: v1
 kind: LimitRange
 metadata:
@@ -43,10 +43,11 @@ spec:
     defaultRequest:
       cpu: 0.5
     type: Container
-...
 ```
  
 Step 2: Apply the LimitRange for the specific namespace:
+
+`kubectl apply -f https://k8s.io/examples/admin/resource/cpu-defaults.yaml --namespace=default-cpu-example`
 
 
 
