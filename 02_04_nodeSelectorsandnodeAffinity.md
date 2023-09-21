@@ -21,9 +21,11 @@ We can now use this within the pod definition file to place the pods on a specif
 
 The nodeSelector and the nodeAffinity features, both does the same job. The nodeAffinity feature provides us with advanced capabilites to limit pod placement on specific nodes, based on complex choice making like placing the pods on large or medium nodes and pods that are not small.<br>
 
-Sample Pod definition file:<br>
+Sample Pod definition file using nodeAffinity:<br>                                               
+![8](https://github.com/pyvivid/K8S-References/assets/94853400/7ddb2b80-8c80-4bb2-85c3-5f9500e307fd)  
 
-![8](https://github.com/pyvivid/K8S-References/assets/94853400/7ddb2b80-8c80-4bb2-85c3-5f9500e307fd)
+ Sample Pod definition file using podAffinity:<br>
+![image](https://github.com/pyvivid/K8S-References/assets/94853400/7b310c46-989d-477f-a1a5-1cd6c481b0a0)
 
 Notice the spec.affinity.nodeAffinity:
 
@@ -34,7 +36,7 @@ The Structure of using nodeAffinity is as: spec.affinity.nodeAffinity.requireDur
 -matchExpressions = List
 -values = List
 
-
+The Structure of using podAffinity is as: spec.affinity.podAffinity.requiredDuringSchedulingIgnoredDuringExecution.-labelSelector.matchExpressions.-key, operator, values: -store.
 
 
 
