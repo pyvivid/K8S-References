@@ -31,7 +31,7 @@ Notice the spec.affinity.nodeAffinity:
 
 - `requiredDuringSchedulingIgnoredDuringExecution` = The scheduler can't schedule the Pod unless the rule is met.
 - `preferredDuringSchedulingIgnoredDuringExecution` = The scheduler tries to find a node that meets the rule. If a matching node is not available, the scheduler still schedules the Pod.
-- requiredDuringSchedulingRequiredDuringExecution - Upcoming, not yet implemented
+- `requiredDuringSchedulingRequiredDuringExecution` - Upcoming, not yet implemented
 
 The Structure of using nodeAffinity is as: spec.affinity.nodeAffinity.requireDuringSchedulingIgnoreDuringExecution.matchExpresssions.key, operator, values.
 -matchExpressions = List
