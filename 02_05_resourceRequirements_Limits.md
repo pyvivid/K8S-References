@@ -14,6 +14,17 @@ A sample usage is as below:<br>
 
 ![image](https://github.com/pyvivid/K8S-References/assets/94853400/2a1b3cfc-23dd-4aed-ad03-5281e9a283fb)
 
-
+A few points to remember:
++ G is Gigabyte, which equals to 1000 MB.
++ Gi is Gibibyte, which equals to 1024 MB.
++ CPU increments does not have to be in increments of 0.5, and can be even as low as 0.1.
++ 0.1 is the lowest value of CPU that can be assigned.
++ 0.1 has to be expressed as 100m.
++ The CPU cannot go lower than 1m.
++ By default Kubernetes limits the CPU to 1 vCPU per container, if not set explicitly.
++ One count of CPU = 1 vCPU. One Core in GCP or Azure or one hyper-thread.
++ As for memory, we can specify minimum of 256Mi or use the G for Gigabyte.
++ The default memory is 512MiB for each container thats deployed on each node.
++ If a pod tries to consume more memory than its limit constantly, the pod will be terminated.
 
 
