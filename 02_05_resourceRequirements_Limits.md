@@ -30,6 +30,7 @@ A few points to remember:
 ## Setting the LimitRange for a nameSpace:
 
 Step 1: Create a LimitRange.yaml file as below:
+```
 ...
 apiVersion: v1
 kind: LimitRange
@@ -43,11 +44,8 @@ spec:
       cpu: 0.5
     type: Container
 ...
-    
-        
-
-
-
+```
+ 
 Step 2: Apply the LimitRange for the specific namespace:
 
 
