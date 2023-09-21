@@ -15,8 +15,18 @@ E.g. <br>
 `# kubectl label node node01 size=Large`<br>
 
 We can now use this within the pod definition file to place the pods on a specific size.<br>
-![7](https://github.com/pyvivid/K8S-References/assets/94853400/d73cdb3e-a349-40e4-a1e9-b610fe25fc10)<br>
-
+```ruby
+apiVersion: v1
+kind: Pod
+metadata:
+  name: webapp-pod
+spec:
+  containers:
+  - name: webapp-pods-containers
+    image: webapp
+  nodeSelector:
+    size: large
+```
 # <p style="text-align: center;">Scheduling Pods - nodeAffinity</p>
 
 The nodeSelector and the nodeAffinity features, both does the same job. The nodeAffinity feature provides us with advanced capabilites to limit pod placement on specific nodes, based on complex choice making like placing the pods on large or medium nodes and pods that are not small.<br>
