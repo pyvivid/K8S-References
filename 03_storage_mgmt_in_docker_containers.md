@@ -1,4 +1,4 @@
-# <p style="text-align: center;">Storage in Docker Containers</p>
+# <p style="text-align: center;"> Storage in Docker Containers </p>
 
 When a docker engine is installed on any node, it creates a file system structure within the `/var/lib/docker` directory as below:<br>
 
