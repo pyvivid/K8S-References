@@ -10,5 +10,16 @@ Some Notable Directories:<br>
 + volumes = Information related to the volumes used within the Docker Containers.
 + images = Information on images stored or are available on the node.
 
+## Understanding the Docker Layered Architecture:
 
+When Docker builds images, the images will contain other images layered within them.
+Each line of instruction within the Docker file used for building images, creates a new layer in the Docker Image, with changes from the previous layer.
+Sample Docker file as below:
+```ruby
+FROM ubuntu
+RUN apt-get update && apt-get -y install python
+RUN pip install flask flask-mysql
+COPY . /opt/source-code
+ENTRYPOINT FLASK_APP=/opt/source-code/app.py flask run
+```
 
