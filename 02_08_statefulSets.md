@@ -23,10 +23,13 @@ to the new Pods that replace any that have failed.
 ## StatefulSet Use cases:
 
 StatefulSets are valuable for applications that require one or more of the following.
++ Ordered Deployment, the first pod is up, running and only then the next pod is started - graceful deployment and scaling.
++ Stateful Sets assign a unique cordinal index to each pods, a number starting from 0 incrementing by 1, combined with the statefulSet name.
++ The above startegy applies to each of the replicas added for scalablity.
 + Stable, unique network identifiers.
 + Stable, persistent storage.
-+ Ordered, graceful deployment and scaling.
 + Ordered, automated rolling updates.<br>
+
 
 
 
