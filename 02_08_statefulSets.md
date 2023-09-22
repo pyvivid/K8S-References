@@ -1,9 +1,18 @@
 # <p style="text-align: center;">Stateful Sets in Kubernetes</p>
 
-Stateful Sets are used to manage stateful applications.<br>
-Stateful Sets manages the deployment and scaling of a set of Pods, and provides guarantees about the ordering and uniqueness of these Pods.<br>
-Unlike a Deployment, a StatefulSet maintains a sticky identity for each of its Pods. <br>
-These pods are created from the same spec, but are not interchangeable: each has a persistent identifier that it maintains across any rescheduling.<br>
+When Deployments cannot satify some app requirements?
+
+Let us say we want to deploy DB pods, with multiple replicas and data synchronisation, the challenges faced are:<br>
++ We require each of these replicas coming up in a specific order, acting as such the first pod is the master node and then a slave1 and then slave2. 
++ Additionally, the data in the DB pod should be synchronized to the volume attached to DB Slave1 and then to DB Slave2.
++ With deployments, when we start a deployment all the pods come up at the same time.
++ To address the above issue a Constant Hostname or IP Address will be required to address the fact, that the . However, Deployment cannot give a constant IP addr, since every time a pod is recreated, it recevies a new IP address and also not a static hostname.
+
+To address the above challenges we use Stateful Sets.<br>
++ Stateful Sets are used to manage stateful applications.<br>
++ Stateful Sets manages the deployment and scaling of a set of Pods, and provides guarantees about the ordering and uniqueness of these Pods.<br>
++ Unlike a Deployment, a StatefulSet maintains a sticky identity for each of its Pods. <br>
++ These pods are created from the same spec, but are not interchangeable: each has a persistent identifier that it maintains across any rescheduling.<br>
 
 ## Storage Volumes and Pods:
 
