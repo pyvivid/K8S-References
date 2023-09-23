@@ -87,4 +87,19 @@ Docker will choose the best driver for the OS automatically.
 
 ## Volume Drivers in Docker:
 
+Volumes in Docker are not handled by the Storage Driver. They are managed by the Volume Driver Plugins.
+Default Volume Driver Plugin is Local.
+The local volume plugin, creates a volume on the Docker host and stores the data under /var/lib/docker volumes directory.
+There are many other volume driver plugins that allow you to create a volume on third part solutions like
++ Azure File Storage
++ Digital Ocean
++ Block Storage
++ Google Compute Persistent Disks
++ ClusterFS
++ PortWorx
+to name a few.
+
+Rex-Ray storage driver can be used to provision volumes on AWS EBS, S3, Isilon and ScaleIO.
+When running a Docker container you can choose to use a specific volume driver such as REX-Ray EBS to provision a volume.
+When the container is destroyed, the data still persists in the cloud.
 
