@@ -96,10 +96,11 @@ There are many other volume driver plugins that allow you to create a volume on 
 + Block Storage
 + Google Compute Persistent Disks
 + ClusterFS
++ REX-Ray
 + PortWorx
 to name a few.
 
-Rex-Ray storage driver can be used to provision volumes on AWS EBS, S3, Isilon and ScaleIO.
+REX-Ray storage driver can be used to provision volumes on AWS EBS, S3, Isilon and ScaleIO.
 When running a Docker container you can choose to use a specific volume driver such as REX-Ray EBS to provision a volume.
 When the container is destroyed, the data still persists in the cloud.
 
