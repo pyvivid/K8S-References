@@ -63,7 +63,7 @@ The life of this layer is only as long as the container live. When the container
 + Even if the container is destroyed, the host volume and data still exists.
 + In the event, that the new volume was not created, but, the command `# docker run -v data_Vol2:/var/lib/mysql mysql` was run, Docker will automatically create the volume within the volumes dir. This method is called **"Volume Mounting"**.
 + Now if I want to store data in a directory other than the usual `/var/lib/docker/volumes` directory, like /data/mysql and running a command as below
-  `# docker run -v /data/mysql:/var/lib/mysql mysql`, will bind the host's volume to the sql container's volume. This is called **bind mounting**. Note the usage of the absolute path of the host here.
+  `# docker run -v /data/mysql:/var/lib/mysql mysql`, will bind the host's volume to the sql container's volume. This is called **"bind mounting"**. Note the usage of the absolute path of the host here.
 
 Note: The newer method of writing the docker command is as:
 `# docker run --mount type=bind,source=/data/mysql,target=/var/lib/mysql mysql`
