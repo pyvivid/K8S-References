@@ -1,7 +1,5 @@
 
 # <p style="text-align: center;">Kubernetes Storage Management</p>
-<p style="text-align: center;">Text_content</p>
-
 
 ## Container Storage Interface<br>
 
