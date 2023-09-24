@@ -147,6 +147,9 @@ spec:
 ```
 
 
+Important Links:
+
+[Link to manage PVs and PVCs in Pods](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/)
 
 
 
