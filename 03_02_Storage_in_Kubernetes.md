@@ -23,4 +23,49 @@ Docker containers are transient in nature meaning they are short lived. They are
 Like wise the data within the containers is also deleted, when the container which handled the data is destroyed.
 For more details on Persistent Volumes in Docker Containers, Check out the persistent volume management in Dockers in section 03_01.
 
+## Persistent Volumes in Kubernetes:
+
+A persistent volume is a cluster-wide pool of storage volumes configured by an administrator to be used by administrators deploying application within the cluster.
+The users can now select storage from the storage pool using persistent volume claims.
+PVs are resources in the cluster. PVCs are requests for those resources and also act as claim checks to the resource.
+
+PVs can be provisioned:
+  + Statically:
+  +     A cluster administrator creates a number of PVs.
+  +     They carry the details of the real storage, which is available for use by cluster users.
+  +     They exist in the Kubernetes API and are available for consumption.
+  + Dynamically:
+  +     When none of the static PVs the administrator created match a user's PersistentVolumeClaim, the cluster may try to dynamically provision a volume specially for the PVC.
+  +     This provisioning is based on StorageClasses: the PVC must request a storage class and the administrator must have created and configured that class for dynamic 
+        provisioning to occur.
+        Claims that request the class "" effectively disable dynamic provisioning for themselves.
+
+Below is a sample PV definition file:
+
+```ruby
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv0003
+spec:
+  # Permissable accessModes are: 1. ReadWriteOnce | 2. ReadWriteMany | 3. ReadOnlyMany
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: slow
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    path: /tmp
+    server: 172.17.0.2
+```
+We can also mount external storage such as EBS vols from AWS and FC vols too.
+
+
+
+
 
