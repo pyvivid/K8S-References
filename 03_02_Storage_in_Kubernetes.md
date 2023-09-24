@@ -1,4 +1,7 @@
+
 # <p style="text-align: center;">Kubernetes Storage Management</p>
+<p style="text-align: center;">Text_content</p>
+
 
 ## Container Storage Interface<br>
 
@@ -17,11 +20,22 @@ Currently Kubernetes, Cloud Foundry and Mesos support CSI.
   as the volume name. The Storage driver should implement this RPC on the storage array and return the results of the operation.
 + Similarily, when the container orchestrator calls the Delete Volume RPC, then the storage driver should implement the code to remove the volume.
 
+Earlier to Kubernetes version 1.28, there was support for various external volumes such as AWS EBS, AzureDisk, CephFS, Cinder to name a few, which were directly inbuilt into 
+the kubernetes code. However, from version 1.8 onwards, kubernetes suggests we use third party drivers called CSI drivers from the same.
+As AWS suggests. CSI drivers replaces the kubernetes 'In-Tree' storage drivers that exists in the Kubernetes Source code.
+Detailed volume management documentation can be found on the kubernetes website at this [location](https://kubernetes.io/docs/concepts/storage/volumes/#using-subpath).
+
+
 ## Volumes in Kubernetes:
 
 Docker containers are transient in nature meaning they are short lived. They are called when they need to process data and destroyed once the work is completed.
 Like wise the data within the containers is also deleted, when the container which handled the data is destroyed.
 For more details on Persistent Volumes in Docker Containers, Check out the persistent volume management in Dockers in section 03_01.
+As for the Kubernetes, every volume configuration information goes into the pod definition file.
+
+A Pod can support any number of volumes simultaneously.
+To use a volume in a pod, specify the volumes to be used as ```.spec.volumes```, declare where to mount the volumes as ```.spec.containers[*].volumeMounts```.
+
 
 ## Persistent Volumes in Kubernetes:
 
@@ -30,15 +44,15 @@ The users can now select storage from the storage pool using persistent volume c
 PVs are resources in the cluster. PVCs are requests for those resources and also act as claim checks to the resource.
 
 PVs can be provisioned:
-  + Statically:
-  +     A cluster administrator creates a number of PVs.
-  +     They carry the details of the real storage, which is available for use by cluster users.
-  +     They exist in the Kubernetes API and are available for consumption.
-  + Dynamically:
-  +     When none of the static PVs the administrator created match a user's PersistentVolumeClaim, the cluster may try to dynamically provision a volume specially for the PVC.
-  +     This provisioning is based on StorageClasses: the PVC must request a storage class and the administrator must have created and configured that class for dynamic 
-        provisioning to occur.
-        Claims that request the class "" effectively disable dynamic provisioning for themselves.
+  + **Statically:**
+    + A cluster administrator creates a number of PVs.
+    + They carry the details of the real storage, which is available for use by cluster users.
+    + They exist in the Kubernetes API and are available for consumption.
+  + **Dynamically:**
+    + When none of the static PVs the administrator created match a user's PersistentVolumeClaim, the cluster may try to dynamically provision a volume specially for the PVC.
+    + This provisioning is based on StorageClasses: the PVC must request a storage class and the administrator must have created and configured that class for dynamic 
+    provisioning to occur.
+    + Claims that request the class "" effectively disable dynamic provisioning for themselves.
 
 Below is a sample PV definition file:
 
@@ -65,7 +79,7 @@ spec:
 ```
 We can also mount external storage such as EBS vols from AWS and FC vols too.
 
-
+## Persistent Volume Claims:
 
 
 
