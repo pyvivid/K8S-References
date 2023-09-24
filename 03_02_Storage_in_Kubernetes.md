@@ -37,20 +37,9 @@ To use a volume in a pod, specify the volumes to be used as ```.spec.volumes```,
 
 ## Persistent Volumes in Kubernetes:
 
-A persistent volume is a cluster-wide pool of storage volumes configured by an administrator to be used by administrators deploying application within the cluster.
-The users can now select storage from the storage pool using persistent volume claims.
-PVs are resources in the cluster. PVCs are requests for those resources and also act as claim checks to the resource.
-
-PVs can be provisioned:
-  + **Statically:**
-    + A cluster administrator creates a number of PVs.
-    + They carry the details of the real storage, which is available for use by cluster users.
-    + They exist in the Kubernetes API and are available for consumption.
-  + **Dynamically:**
-    + When none of the static PVs the administrator created match a user's PersistentVolumeClaim, the cluster may try to dynamically provision a volume specially for the PVC.
-    + This provisioning is based on StorageClasses: the PVC must request a storage class and the administrator must have created and configured that class for dynamic 
-    provisioning to occur.
-    + Claims that request the class "" effectively disable dynamic provisioning for themselves.
+To manage storage more centrally from within the cluster, a cluster-wide centralized pool of storage volumes ae configured by an administrator.
+The users can now carve storage from the storage pool to be used within the pods, using persistent volume claims.
+The PVs are resources in the cluster. PVCs are requests for those resources and also act as claim checks to the resource.
 
 Below is a sample PV definition file:
 
@@ -58,9 +47,9 @@ Below is a sample PV definition file:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: pv0003
+  name: pv-vol01
 spec:
-  # Permissable accessModes are: 1. ReadWriteOnce | 2. ReadWriteMany | 3. ReadOnlyMany
+  # Permissable accessModes are: **1. ReadWriteOnce | 2. ReadWriteMany | 3. ReadOnlyMany**
   accessModes:
     - ReadWriteOnce
   capacity:
@@ -75,9 +64,28 @@ spec:
     path: /tmp
     server: 172.17.0.2
 ```
-We can also mount external storage such as EBS vols from AWS and FC vols too.
+We can also mount external storage such as EBS vols from AWS, FC vols and iSCSI too.
+
+From the PV created, we can carve a Persistent Volume Claim and can be presented to the nodes.
+A Persistent Volume Claim(PVC) is a request for storage by a user for use within a node.
+Pods consume node resources and PVCs consume OPV resources.
+Claims can request **specific sizes and access modes**.
+Cluster Administrators need to provide varieties of PVs that differ in sizes, performance and access methods.
+
+## Lifecycle of a Volume and Claim:
+
+PVs are resources in cluster.
+PVCs are requests for those resources and also act as claim checks to the resource.
+
+PVs can be provisioned:
+  + **Statically:**
+    + A cluster administrator creates a number of PVs.
+    + They carry the details of the real storage, which is available for use by cluster users.
+    + They exist in the Kubernetes API and are available for consumption.
+  + **Dynamically:**
+    + When none of the static PVs the administrator created match a user's PersistentVolumeClaim, the cluster may try to dynamically provision a volume specially for the PVC.
+    + This provisioning is based on StorageClasses: the PVC must request a storage class and the administrator must have created and configured that class for dynamic 
+    provisioning to occur.
+    + Claims that request the class "" effectively disable dynamic provisioning for themselves.
 
 ## Persistent Volume Claims:
-
-
-
