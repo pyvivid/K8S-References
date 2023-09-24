@@ -116,14 +116,35 @@ The PVC and PV info can be viewed by
 `# kubectl get persistentvolumeclaim`
 `# kubectl get persistentvolume`
 
-To Delete the Volume:
-`# kubectl delete persistentvolumeclaim pvc_name`
-Now to retain the PV, when the PVC was created, use the following line, which is the default:
-`persistentVolumeReclaimPolicy: Retain`
-With the above option set, the PV will remain until manually deleted.
-However, to delete the PV when the PVC is deleted, set as below:
-`persistentVolumeReclaimPolicy: Delete`
-Once the PV has been detached from the PVC, it cannot be claimed by another PVC.<br>
+To Delete the Volume:<br>
+`# kubectl delete persistentvolumeclaim pvc_name`<br>
+Now to retain the PV, when the PVC was created, use the following line, which is the default:<br>
+`persistentVolumeReclaimPolicy: Retain`<br>
+With the above option set, the PV will remain until manually deleted.<br>
+However, to delete the PV when the PVC is deleted automatically and reclaim, set as below:<br>
+`persistentVolumeReclaimPolicy: Delete`<br>
+Once the PV has been detached from the PVC, it cannot be claimed by another PVC.<br><br>
+There is option to scrub the data and make the PV available using:<br>
+`persistentVolumeReclaimPolicy: Recycle`<br>
+
+Usage within a Pod or RS or Deployment:
+```ruby
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+spec:
+  containers:
+    - name: myfrontend
+      image: nginx
+      volumeMounts:
+      - mountPath: "/var/www/html"
+        name: mypd
+  volumes:
+    - name: mypd
+      persistentVolumeClaim:
+        claimName: myclaim
+```
 
 
 
