@@ -50,7 +50,7 @@ kind: PersistentVolume
 metadata:
   name: pv-vol01
 spec:
-  # Permissable accessModes are: **1. ReadWriteOnce | 2. ReadWriteMany | 3. ReadOnlyMany**
+  # Permissable accessModes are: **1. ReadWriteOnce - RWO | 2. ReadWriteMany - RWX | 3. ReadOnlyMany - ROX**
   accessModes:
     - ReadWriteOnce
   capacity:
@@ -151,6 +151,100 @@ Important Links:
 
 [Link to manage PVs and PVCs in Pods](https://kubernetes.io/docs/tasks/configure-pod-container/configure-persistent-volume-storage/)
 
+## Storage Classes in Kubernetes:
 
+### Static Provisioning Volumes: If you are going to use a disk in your pod from a Cloud provider like GCP, you should have already created the disk in GCP, before using the disk in your Kubernetes Cluster to  provision it for your pods.<br> Now with the above approach, you have to Create PD in GCP >> Create PV in K8S >> Bind to PVC.<br>
+However, if you wanted the disk to be created automatically in GCP, when your application needs it, thats where Storage Classes comes in.<br>
+
+With Storage Classes, you can define a provisioner such as GCP PD and automatically provision the storage on GCP and attach to a pod, when a claim is made. This is called 
+**Dynamic Provisioning**.<br>
+To implement the above, first create a Storage Class definition file as below:
+```ruby
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: google-storage
+provisioner: kubernetes.io/gce-pd
+```
+
+Once done, we can call this into a PV Definition file as below:
+
+```ruby
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-vol1
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 500Mi
+  gcpPersistentDisk:
+     pdName: pd-disk
+     fstype: ext4
+```
+Now referring back to the older Pod Definition file, where the PVC is used, the PVC is bound to the PV. In our current scenario, when we have automated the creation of the PV, we no longer need the PV definition. <br>
+Sample Pod Definition file when using SC to create a volume on a provisioner such as GCP, use as below:
+```ruby
+apiVersion: v1
+kind: Pod
+metadata:
+  name: random-number-generator
+spec:
+  containers:
+  - image: alpine
+    name: alpine
+    command: ["/bin/sh"."-c"]
+    args: ["shuf -i 0-100 -n 1 >> /opt/"]
+    volumeMounts:
+    - mountPath: /opt
+      name: data-volume
+    volumes:
+    - name: data-volume
+      persistentVolumeClaim:
+        claimName: myclaim
+```
+Remember,
++ The PVC needs to exist
++ The PV def file does not need to be created, however, when the Pod def is run, the PV is still created, but, you dont have to create it manually anymore.
+
+Sample PVC that refers to the PVC used in the Pod def file as above:
+
+```ruby
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: myclaim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: google-storage
+  resources:
+    requests:
+      storage: 500Mi
+```
+The above file will refer to the SC as below:
+```ruby
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: google-storage
+provisioner: kubernetes.io/gce-pd
+```
+With this setup, Create PD in GCP when the PVC is applied >> PV is automatically created and bound to the PV >> Bind to PVC.<br>
+Other Provisioners include:
++ AWS EBS
++ Azure File
++ Azure Disk
++ CephFS
++ PortWorx
++ ScaleIO
++ and So on.
+
+When configuring the SC, we can specify more parameters with the provisioners such as:
++ type of disk to provision = gp2, gp3..
++ replication type = zonal, regional..
+
+We can also create different storage classes like Gold, Silver and Platinum with the type of disks and replication.
 
 
