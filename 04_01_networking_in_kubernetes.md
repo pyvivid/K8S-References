@@ -55,6 +55,7 @@ Now as in the above diagram, lets say, System B(192.168.1.11) wants to communica
 This is where **Gateway** comes in. If the Network was the room, then the Gateway is the door to the outside world, which can simply be other networks or to the Internet.<br>
 The systems within each network needs to know, where the GW is located to go through that.
 The exisiting routing configuration can be viewed as below(its currently holds no configuration):
+
 ```
 ubuntu $ route
 Kernel IP routing table
