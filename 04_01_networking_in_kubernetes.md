@@ -48,6 +48,29 @@ A router:
 
 Now as in the above diagram, lets say, System C wants to connect to System A, and like the router there can be numerous other devices within the network.<br>
 This is where **Gateway** comes in. If the Network was the room, then the Gateway is the door to the outside world, which can simply be other networks or to the Internet.<br>
+The systems within each network needs to know, where the GW is located to go through that.
+The exisiting routing configuration can be viewed as below:
+```
+ubuntu $ route
+Kernel IP routing table
+Destination      Gateway         Genmask         Flags Metric Ref    Use Iface
+default          192.168.1.1     0.0.0.0         UG    0      0        0 enp1s0
+192.168.0.0      0.0.0.0         255.255.0.0     U     0      0        0 docker0
+192.168.1.0      0.0.0.0         255.255.255.0   U     0      0        0 enp1s0
+ubuntu $
+```
+The above is the kernel's routing table on a single machine within the networks.
+If there are no routing configurations available then we can add routes as below:<br>
+```# ip route add 192.168.2.0/24 via 192.168.1.1```<br>
+The above command will let know all the machines in the 2.0 network to reach to machines in the 1.0 network via 192.168.1.1. 
+From above, this seems like we have to add the route on all systems within the 2.0 network to have this knowledge. Also for the machines in the 2.0 network to
+communicate to the outside world(internet, after connecting the router to internet, we add a route to the routing table entry. This looks quite tedious task, right.
+Instead, we can say, 
+```# ip route add default via 192.168.2.1``` <br> or <br>
+```# ip route add 0.0.0.0/0 via 192.168.2.1```<br>
+notice the default replaced by 0.0.0.0/0
+which tells the machines in the 2.0 network, that for any communications to the outside world or other network, use the 192.168.2.1 gateway.
+
 
 
 
