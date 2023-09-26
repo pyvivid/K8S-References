@@ -108,6 +108,15 @@ This way any request to any network, will be routed via the particular router on
 Let us say, you have multiple routers in your network, one for internal communications and one for internet, then you will need to have 2 seperate entries for each router.
 ![image](https://github.com/pyvivid/K8S-References/assets/94853400/d51d02a5-e73e-4455-9f3c-3dbcf81ce39d)
 
+As in the above diagram, we need to have 2 entries as below:
+```
+ubuntu $ route
+Kernel IP routing table
+Destination      Gateway         Genmask         Flags Metric Ref  Use Iface
+default          192.168.2.1     0.0.0.0         UG    0      0    0   eth0
+192.168.1.0      192.168.2.2     255.255.255.0   UG    0      0    0   eth0
+ubuntu $
+```
 
 ## DNS Basics:
 
