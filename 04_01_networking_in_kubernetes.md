@@ -66,9 +66,34 @@ The above is the kernel's routing table on every single machine within the netwo
 Lets say we want the Sys B to communicate to SysC add the following route:<br>
 ```# ip route add 192.168.2.0/24 via 192.168.1.1```<br>
 The above command will let know the machines that to reach the machine in the 2.0 network, it has to travel via 192.168.1.1. <br>
-Remeber, this has to be configured on all the systems. <br>
-From above, this seems like we have to add the route on all systems within the 2.0 network to have this knowledge. Also for the machines in the 2.0 network to
-communicate to the outside world(internet, after connecting the router to internet, we add a route to the routing table entry. This looks quite tedious task, right.
+After having added the above line on the Sys B, if we run the route command again:
+```
+ubuntu $ route
+Kernel IP routing table
+Destination      Gateway         Genmask         Flags Metric Ref  Use Iface
+192.168.2.0      192.168.1.1     255.255.255.0   UG    0      0    0   eth0
+ubuntu $
+```
+Remember, the above process has to be repeated on all the machines within all the networks.<br>
+If the Sys C has to communicate to Sys B, then a routing table needs to be added to the Sys C as:
+```# ip route add 192.168.1.0/24 via 192.168.2.1```<br>
+After having added the above line on the Sys C, if we run the route command :
+```
+ubuntu $ route
+Kernel IP routing table
+Destination      Gateway         Genmask         Flags Metric Ref  Use Iface
+192.168.1.0      192.168.2.1     255.255.255.0   UG    0      0    0   eth0
+ubuntu $
+```
+Now we want our machines in all the networks to communicate to the outside world(internet), after connecting the router to internet, we add a route to the routing table entry for every machine in every network.
+
+
+
+
+
+
+
+This looks quite tedious task, right.
 Instead, we can say, 
 ```# ip route add default via 192.168.2.1``` <br> or <br>
 ```# ip route add 0.0.0.0/0 via 192.168.2.1```<br>
