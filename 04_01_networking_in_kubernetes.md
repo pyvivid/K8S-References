@@ -85,20 +85,29 @@ Destination      Gateway         Genmask         Flags Metric Ref  Use Iface
 192.168.1.0      192.168.2.1     255.255.255.0   UG    0      0    0   eth0
 ubuntu $
 ```
-Now we want our machines in all the networks to communicate to the outside world(internet), after connecting the router to internet, we add a route to the routing table entry for every machine in every network.
-
-
-
-
-
-
-
-This looks quite tedious task, right.
-Instead, we can say, 
+Now we want our machines in all the networks to communicate to the outside world(internet).<br>
+After connecting the router to internet, we add a route to the routing table entry for every machine in every network.
+```# ip route add 192.168.1.0/24 via 192.168.2.1```
+```# ip route add 172.217.194.0/24 via 192.168.2.1```
+If the route command is executed again, we should see like:
+```
+ubuntu $ route
+Kernel IP routing table
+Destination      Gateway         Genmask         Flags Metric Ref  Use Iface
+192.168.1.0      192.168.2.1     255.255.255.0   UG    0      0    0   eth0
+172.217.194.0    192.168.2.1     255.255.255.0   UG    0      0    0   eth0
+ubuntu $
+```
+This looks quite tedious task, right. And we have numerous websites and applications that we would want to connect in the internet.<br>
+Instead, we can say, like, if you do not know the route to any network use this router as the default gateway.<br>
 ```# ip route add default via 192.168.2.1``` <br> or <br>
 ```# ip route add 0.0.0.0/0 via 192.168.2.1```<br>
-notice the default replaced by 0.0.0.0/0
-which tells the machines in the 2.0 network, that for any communications to the outside world or other network, use the 192.168.2.1 gateway.
+notice the default replaced by 0.0.0.0/0.<br>
+This way any request to any network, will be routed via the particular router on 192.168.2.1, which tells the machines in the 2.0 network, that for any communications to the outside world or other network, use the 192.168.2.1 gateway.<br>
+
+Let us say, you have multiple routers in your network, one for internal communications and one for internet, then you will need to have 2 seperate entries for each router.
+![image](https://github.com/pyvivid/K8S-References/assets/94853400/d51d02a5-e73e-4455-9f3c-3dbcf81ce39d)
+
 
 ## DNS Basics:
 
