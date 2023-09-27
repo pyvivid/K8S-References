@@ -106,10 +106,10 @@ Instead, we can say, like, if you do not know the route to any network use this 
 notice the default replaced by 0.0.0.0/0.<br>
 This way any request to any network, will be routed via the particular router on 192.168.2.1, which tells the machines in the 2.0 network, that for any communications to the outside world or other network, use the 192.168.2.1 gateway.<br>
 
-Let us say, you have multiple routers in your network, one for internal communications and one for internet, then you will need to have 2 seperate entries for each router.
-![image](https://github.com/pyvivid/K8S-References/assets/94853400/d51d02a5-e73e-4455-9f3c-3dbcf81ce39d)
+Let us say, you have multiple routers in your network, one for internal communications and one for internet, then you will need to have 2 seperate entries for each router.<br>
+![image](https://github.com/pyvivid/K8S-References/assets/94853400/d51d02a5-e73e-4455-9f3c-3dbcf81ce39d)<br>
 
-As in the above diagram, we need to have 2 entries as below:
+As in the above diagram, we need to have 2 entries as below:<br>
 ```
 ubuntu $ route
 Kernel IP routing table
@@ -118,8 +118,85 @@ default          192.168.2.1     0.0.0.0         UG    0      0    0   eth0
 192.168.1.0      192.168.2.2     255.255.255.0   UG    0      0    0   eth0
 ubuntu $
 ```
-
+<br>
 ## DNS Basics:
+<br>
+We have 2 nodes, Sys A and Sys B , each assigned with assigned address 192.168.1.10 and 192.168.1.11 respectively. The nodes are pingable from each other.<br>
+The Sys B hosts DBs and has a hostname "db". <br>
+If we ping the 2nd node from the 1st node as ```ping db``` rather than using its IP address, we will not get a response from the 2nd node.<br>
+To make the Sys A understand that whenever we reference to a hostname as DB it references to 192.168.1.11, within the Sys A, **/etc/hosts** file, must have an entry as below:<br>
+```
+# cat /etc/hosts
+192.168.1.11          db
+```
+The entry in the above file states that the 192.168.1.11 has a hostname to be referenced as "db". Whatever we put into the /etc/hosts the system will take for granted.<br>
+The Sys A does not check if the Sys B's hostname is Db or not. Now, lets say the hostname on Sys B is changed, but still the Sys A will be able to ping Sys B.<br>
+If within an /etc/hosts file, there are 2 different hostnames referencing to the same IP address, in this case Sys A, Sys A can reach Sys B as db or any other name set in the /etc/hosts file.<br>
+```
+# cat /etc/hosts
+192.168.1.11          db
+192.168.1.11          www.google.com
+```
+In the above case the node with IP address 192.168.1.11 will be reachable from Sys A as both db or www.google.com.<br>
+You can have as many host information as you want within the hosts file.<br>
+When any application or ping or ssh tries to reach a host, it will check into the /etc/hosts file, find the ip address of that host and reach it. This process of translating hostnames to IP addresses is called **"Name Resolution"**.<br>
+When within a small network, the above method works fine. However, if we need to work with a large number of nodes within a network, maintaining the information on every host and updates to the file as the IP changes are quite a 
+tedious task. This is where a DNS server comes in.<br>
+The DNS server maintains the list of all hosts within the network and each node within the network can check with the DNS host and find the IP address, rather than having all the information within its /etc/hosts file.<br>
+Every node has a file **/etc/resolv.conf** which will contain the DNS host information, which the node can reach out to, to find the IP address of any node within a network.<br>
+```
+# cat /etc/resolv.conf
+nameserver         192.168.1.100
+```
+This information will need to be configured in each of the node within your network and when any node does not know the IP address of the node it wants to communicte to, it will check the /etc/resolv.conf file for the DNS nameserver 
+information and find it from there.<br>
+Now, if the IP address of any of the hosts within the network changes, then just update the IP address in the DNS server and now any node to reach the updated node, can find the infomation from the DNS nameserver.<br>
+Now for one time or indiviual test needs a node can still refer to the /etc/hosts file for this information.<br>
+So a system is able to use host name to IP mapping from the /etc/hosts file locally as well as from a remote DNS server.<br>
+
+### DNS Hierarchy:
+
+Let us say, I have an entry in my local file set to 192.168.1.115 for a server, while, within the DNS server, the entry for the server is set as 192.168.1.116.
+The node which requires the IP will first look in the local /etc/hosts file for the IP, if the IP is found it starts moving towards the IP found in the hosts file which is 115 in this case.
+Else, it moves to check the DNS server specified in the /etc/resolv.conf file and checks on the DNS server, and if the IP is found there it moves to 116.
+However, the order in which the node checks for the IP can be spcified in the /etc/nsswitch.conf. The contents of the nsswitch.conf resembles:
+```
+# cat /etc/nsswitch.conf
+...
+hosts:         files    dns
+...
+```
+With the above configuration, the node checking for the IP of the other node, will first check in the local hosts file and then the DNS.
+If we switch the order of the "files dns" to "dns   files", the node will first check on dns first and then the local.
+
+Additionally you can add another DNS server info in the /etc/resolv.conf file, like
+```
+# cat /etc/resolv.conf
+nameserver         192.168.1.100
+nameserver         8.8.8.8
+```
+The 8.8.8.8 is a DNS server hosted by google, that contains all the info about all the domains in the internet.
+We can have multiple name servers configured in the resolv.conf file of the host.
+We can also have our DNS server, 192.168.1.100 configured to forward any unknown host names to the public name server on the internet.
+
+## Understanding Domain Names:
+
+www.facebook.com is a domain name.
+Domain names allow us to remember the name of a company/service easily rather than the IP address. 
+The last portion of the domain name ".com" = Top Level Domains. Other TLDs include .org, .net, .edu to name a few.
+facebook = Assigned Domain Name
+www = Sub Domain or maps.google.com = maps is a subdomain
+
+
+
+
+
+
+
+
+
+
+
 
 
 
