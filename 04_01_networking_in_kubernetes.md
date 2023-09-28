@@ -202,12 +202,42 @@ On the internet, multiple DNS servers may be used to resolve the IP address of t
 
 ## DNS Records
 
-FQDN:
-    + Fully Qulaified Domain Name
-A and AAAA Records:
-    + Both the A and AAAA map a host to an IP address.
-    + The A record is used for IPv4 IP addresses and AAAA is used for IPv6 IP addresses.
-    ![image](https://github.com/pyvivid/K8S-References/assets/94853400/b475e287-bb2c-4564-9d09-47a3c3aaa206)
+DNS Records of a Domain are stored in a Zone File also called as the HostZone file.<br>
+![image](https://github.com/pyvivid/K8S-References/assets/94853400/f558d10a-67af-4af7-8e71-d97eaab5901f)
+
+FQDN:<br>
+    + Fully Qulaified Domain Name<br>
+A and AAAA Records:<br>
+    + Both the A and AAAA map a host to an IP address.<br>
+    + The A record is used for IPv4 IP addresses and AAAA is used for IPv6 IP addresses.<br>
+    ![image](https://github.com/pyvivid/K8S-References/assets/94853400/4e73feec-0318-404e-bcf4-684e3bea7dd2)<br>
+CNAME Records<br>
+    + CNAME records define the Canonical Name for the Server in which the domain is hosted.<br>
+    + CNAME maps one name to another. 
+    ![image](https://github.com/pyvivid/K8S-References/assets/94853400/353d0f0b-7faf-47d3-b78e-4af46cc70875)<br>
+MX Records:<br>
+    + MX records are used to define the mail exchanges that are used for the domain. This helps email messages arrive at your mail server correctly.<br>
+    ![image](https://github.com/pyvivid/K8S-References/assets/94853400/7bfdbe83-df64-4a6d-99cf-416ce6267ca0)<br>
+NS Records:<br>
+    + NS Records defines the DNS Server information of the specific domain.<br>
+    ![image](https://github.com/pyvivid/K8S-References/assets/94853400/5b566a0e-43d7-490f-a3c5-4eab46e13830)<br>
+
+To find the DNS resolution we can use the nslopkup command.
+```
+uroot01@uroot01:~$ nslookup www.google.com
+Server:		127.0.0.53
+Address:	127.0.0.53#53
+
+Non-authoritative answer:
+Name:	www.google.com
+Address: 142.250.76.68
+Name:	www.google.com
+Address: 2404:6800:4007:815::2004
+```
+
+
+
+
 
     
 
