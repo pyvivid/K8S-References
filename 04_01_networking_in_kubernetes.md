@@ -198,8 +198,18 @@ On the internet, multiple DNS servers may be used to resolve the IP address of t
 + The Org's DNS server will cache the IP of the destination for a set amount of time, to expedite the whole process, if another request to the same destination comes in.
 
 ![image](https://github.com/pyvivid/K8S-References/assets/94853400/ed77f5ee-40c8-4751-a592-98b568511289)
+<br>
 
+## DNS Records
 
+FQDN:
+    + Fully Qulaified Domain Name
+A and AAAA Records:
+    + Both the A and AAAA map a host to an IP address.
+    + The A record is used for IPv4 IP addresses and AAAA is used for IPv6 IP addresses.
+    ![image](https://github.com/pyvivid/K8S-References/assets/94853400/b475e287-bb2c-4564-9d09-47a3c3aaa206)
+
+    
 
 
 
