@@ -156,36 +156,45 @@ So a system is able to use host name to IP mapping from the /etc/hosts file loca
 
 ### DNS Hierarchy:
 
-Let us say, I have an entry in my local file set to 192.168.1.115 for a server, while, within the DNS server, the entry for the server is set as 192.168.1.116.
-The node which requires the IP will first look in the local /etc/hosts file for the IP, if the IP is found it starts moving towards the IP found in the hosts file which is 115 in this case.
-Else, it moves to check the DNS server specified in the /etc/resolv.conf file and checks on the DNS server, and if the IP is found there it moves to 116.
-However, the order in which the node checks for the IP can be spcified in the /etc/nsswitch.conf. The contents of the nsswitch.conf resembles:
+Let us say, I have an entry in my local file set to 192.168.1.115 for a server, while, within the DNS server, the entry for the server is set as 192.168.1.116.<br>
+The node which requires the IP will first look in the local /etc/hosts file for the IP, if the IP is found it starts moving towards the IP found in the hosts file which is 115 in this case.<br>
+Else, it moves to check the DNS server specified in the /etc/resolv.conf file and checks on the DNS server, and if the IP is found there it moves to 116.<br>
+However, the order in which the node checks for the IP can be spcified in the /etc/nsswitch.conf. The contents of the nsswitch.conf resembles:<br>
 ```
 # cat /etc/nsswitch.conf
 ...
 hosts:         files    dns
 ...
 ```
-With the above configuration, the node checking for the IP of the other node, will first check in the local hosts file and then the DNS.
-If we switch the order of the "files dns" to "dns   files", the node will first check on dns first and then the local.
+With the above configuration, the node checking for the IP of the other node, will first check in the local hosts file and then the DNS.<br>
+If we switch the order of the "files dns" to "dns   files", the node will first check on dns first and then the local.<br>
 
-Additionally you can add another DNS server info in the /etc/resolv.conf file, like
+Additionally you can add another DNS server info in the /etc/resolv.conf file, like<br>
 ```
 # cat /etc/resolv.conf
 nameserver         192.168.1.100
 nameserver         8.8.8.8
 ```
-The 8.8.8.8 is a DNS server hosted by google, that contains all the info about all the domains in the internet.
-We can have multiple name servers configured in the resolv.conf file of the host.
-We can also have our DNS server, 192.168.1.100 configured to forward any unknown host names to the public name server on the internet.
+The 8.8.8.8 is a DNS server hosted by google, that contains all the info about all the domains in the internet.<br>
+We can have multiple name servers configured in the resolv.conf file of the host.<br>
+We can also have our DNS server, 192.168.1.100 configured to forward any unknown host names to the public name server on the internet.<br>
 
-## Understanding Domain Names:
+## Understanding Domain Names:<br>
 
-www.facebook.com is a domain name.
-Domain names allow us to remember the name of a company/service easily rather than the IP address. 
-The last portion of the domain name ".com" = Top Level Domains. Other TLDs include .org, .net, .edu to name a few.
-facebook = Assigned Domain Name
-www = Sub Domain or maps.google.com = maps is a subdomain
+**www.facebook.com** is a domain name.<br>
+Domain names allow us to remember the name of a company/service easily rather than the IP address. <br>
+The last portion of the domain name ".com" = Top Level Domains. Other TLDs include .org, .net, .edu to name a few.<br>
+facebook = Assigned Domain Name<br>
+www = Sub Domain or maps.google.com = maps is a subdomain. A single domain have multiple subdomains associated with it.<br>
+![image](https://github.com/pyvivid/K8S-References/assets/94853400/56c4cfa8-7084-4e96-a500-a82104dbf3a4)
+
+
+Now let see the path a data request will flow, when trying to reach a particular domain like apps.google.com. Assuming apps.google.com is hosted at 216.58.221.78.
+From your machine, the request flows to t
+
+![image](https://github.com/pyvivid/K8S-References/assets/94853400/ed77f5ee-40c8-4751-a592-98b568511289)
+
+
 
 
 
