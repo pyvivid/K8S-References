@@ -190,7 +190,12 @@ www = Sub Domain or maps.google.com = maps is a subdomain. A single domain have 
 
 
 Now let see the path a data request will flow, when trying to reach a particular domain like apps.google.com. Assuming apps.google.com is hosted at 216.58.221.78.
-From your machine, the request flows to t
+From your machine, the request flows to your organization's DNS server. Since your DNS server does not info about the google.com or apps.google.com, it will forward the request to the internet.<br>
+On the internet, multiple DNS servers may be used to resolve the IP address of the apps.google.com. This flow occurs by forwarding the request 
++ First to the DNS server providing .com domain name resolution.
++ Then forwards the request to Google's DNS server to locate the server hosting the "app".
++ Once the IP of the app is found the response is received from the app.google.com into your local machine, from where the request originated.
++ The Org's DNS server will cache the IP of the destination for a set amount of time, to expedite the whole process, if another request to the same destination comes in.
 
 ![image](https://github.com/pyvivid/K8S-References/assets/94853400/ed77f5ee-40c8-4751-a592-98b568511289)
 
