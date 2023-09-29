@@ -288,16 +288,74 @@ We can then assign IP addresses to each of these namespaces.
 # ip -n blue addr add 192.168.15.2 dev veth-blue
 # ip netns exec red ping 192.168.15.2
 ```
-The above set up should have set the IP address to the virtual ethernet ports of the namespaces.
-Usually we may have more than a few virtual instances within each host and we would need each of these hosts to communicate with each other.
-To allow multiple instances within a server communicate with each other on their own ethernet addresses, we need to create a switch.
-In this case, our switch is a Bridge. To create a bridge:
+The above set up should have set the IP address to the virtual ethernet ports of the namespaces.<br>
+Usually we may have more than a few virtual instances within each host and we would need each of these hosts to communicate with each other.<br>
+To allow multiple instances within a server communicate with each other on their own ethernet addresses, we need to create a switch.<br>
+In this case, our switch is a Bridge. To create a bridge:<br>
 ```
 # ip link add v-net-0 type bridge
 # ip link set dev v-net-0 up
 ```
-The v-net-0 behaves like 
-a switch within the environment, allowing instances to communicate with each other.
+The v-net-0 interface behaves like a switch within the virtualization environment, allowing instances to communicate with each other.<br>
+Now running the ip link command on the host, will display the bridge as an interface for us.<br>
+![271572711-ec04b65f-65b5-42d9-a4d](https://github.com/pyvivid/K8S-References/assets/94853400/c0374b93-7b69-4153-b0df-d3d95bf877f8)<br>
+<br>
+```
+# ip link
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state
+   UNKNOWN mode DEFAULT group default qlen 1000
+   link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc
+   fq_codel state UP mode DEFAULT group default qlen 1000
+   link/ether 02:0d:31:14:c7:a7 brd ff:ff:ff:ff:ff:ff
+6: v-net-0: <BROADCAST,MULTICAST> mtu 1500 qdisc noop state UP
+   mode DEFAULT group default qlen 1000
+   link/ether 06:9d:69:52:6f:61 brd ff:ff:ff:ff:ff:ff
+```
+Now with the Bridge network in place, we can have the Virtual Instances connect to each other via the bridge.<br>
+So, we can now delete the eth0 interfaces, which we had created earlier. Deleting one veth, like veth-red, will also delete the veth-blue, sicne they are a pair.<br>
+```# ip -n red link del veth-red```
+Now, we can create virtual connection the namespaces to the Bridge like:<br>
+```# ip link add veth-red type veth peer name veth-red-br```
+The veth-red is the interface on the namespace, while the veth-red-br is the interface on the switch within the switch.
+Repeat the same process for the blue interface also.
+Remember, we still have to attach the other end to the bridge network, which can be done by:
+```
+# ip link set veth-red netns red
+# ip link set veth-red-br master v-net-0
+# ip link set veth-blue netns blue
+# ip link set veth-blue-br master v-net-0
+```
+We can now assign IP addresses to the interfaces:<br>
+```
+# ip -n red addr add 192.168.10.1 dev veth-red
+# ip -n blue addr add 192.168.10.2 dev veth-blue
+```
+Assuming we have all the 4 namespaces now created and connected to the bridge network and they all communicate with each other.
+They all have IP addresses of 192.168.10.1..4.
+The node within which all the instances are running is currently on 192.168.1.2. 
+Though the namespaces are within the node, the host will not be able to ping the IP addresses of the namespaces newly created on 192.168.10.1..4.
+This is because, we haven't assigned an IP address to the bridge, so to do that:
+```# ip addr add 192.168.10.5/24 dev v-net-0```
+Once the bridge is assigned an IP address, we should be able to ping the bridge from the host.
+This is all within the node, and we dont have access to the outside world. 
+All access to the outside world, from the internal namespaces will be through the eth0 on the main node/host.<br>
+![nw (1)](https://github.com/pyvivid/K8S-References/assets/94853400/c866b1cc-89d4-4fc7-98d2-f5437a7d7ca2)
+
+Now, lets say the interface from the virtual instance/internal namespace wants to reach another physical server, then it looks at its routing table to find the route to that network.
+In this case, the interface on the host node of the virtual namespaces serves as the gateway to the outside world for the internal namespaces/virtual instances.
+To view the route table of the blue namespaces:
+```
+# ip netns exec blue ip route add 192.168.1.0/24 via 192.168.15.5
+Destination      Gateway         Genmask         Flags Metric Ref  Use Iface
+192.168.15.0     0.0.0.0         255.255.255.0   UG    0      0    0   veth-blue
+192.168.1.0      192.168.15.5    255.255.255.0   UG    0      0    0   veth-blue
+```
+
+
+
+
+
 
 
 
