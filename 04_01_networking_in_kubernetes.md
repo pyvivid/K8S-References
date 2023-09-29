@@ -203,7 +203,7 @@ On the internet, multiple DNS servers may be used to resolve the IP address of t
 ## DNS Records
 
 DNS Records of a Domain are stored in a Zone File also called as the HostZone file.<br>
-![image](https://github.com/pyvivid/K8S-References/assets/94853400/f558d10a-67af-4af7-8e71-d97eaab5901f)
+![image](https://github.com/pyvivid/K8S-References/assets/94853400/f558d10a-67af-4af7-8e71-d97eaab5901f)<br>
 
 FQDN:<br>
     + Fully Qulaified Domain Name<br>
@@ -235,24 +235,57 @@ Name:	www.google.com
 Address: 2404:6800:4007:815::2004
 ```
 
+## Networking NameSpaces in Linux:<br>
 
+Just like system level namespaces, the network namespaces are used by containerization tools like Docker to implement network isolation of resources.<br>
+Each container, has its own interface and it can have its own Routing and ARP tables.<br>
+We can create network namespaces within a linux host as below:<br>
+```
+# ip netns add red
+# ip netns add blue
+# ip netns
+red
+blue
+```
+TO view the link interfaces of a node, we can use the ```# ip link command```. Like wise, if I wanted to see the interface created by a network namespace, we can use:<br>
+```
+# ip netns exec red ip link
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc state UNKNOWN mode DEFAULT group default qlen 1000
+link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+```
+What we see from above is that a loopback address of the network namespace is visible, however we cannot see the eth0 interface on the host.<br>
+So with namespaces, we have successfully prevented the container from seeing the host interface.<br>
+Same is the case with the ARP and routing table. When running the ARP within the main host:<br>
+```
+# arp
+Address          HwType        HwAddress            Flags  Mask    Iface
+172.17.0.21      ether         02:42:ac:11:00:15	C              etho
+172.16.0.8       ether         06:fe:d3:b5:59:65	C              etho
+_gateway         ether         02:42:d5:7a:84:8e	C              etho
+host01q          ether         02:42:ac:11:00:1c	C              etho
+# ip netns exec red arp
+Address          HwType        HwAddress            Flags  Mask    Iface
+```
+<br>
+Now as of now, these network namespaces have no network connectivity, they have no interfaces of their own and they cannot see the underlying host network.<br>
+Two network namespaces can be connected to each other using a virtual ethernet cable called Pipe. It is a virtual cable with 2 interfaces on each of the ends.
+To connect them run the command:<br>
 
+```# ip link add veth-red type veth peer name veth-blue```
 
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
+The next step is to attach the interfaces to their respective namespaces. 
+```
+# ip link set veth-red netns red
+# ip link set veth-blue netns blue
+```
+We can then assign IP addresses to each of these namespaces. 
+```
+# ip -n red addr add 192.168.15.1 dev veth-red
+# ip -n blue addr add 192.168.15.2 dev veth-blue
+# ip netns exec red ping 192.168.15.2
+```
+The above set up should have set the IP address to the virtual ethernet ports of the namespaces.
+Usually we may have more than a few virtual instances within each host and we would need each of these hosts to communicate with each other.
 
 
 
