@@ -125,31 +125,35 @@ We have 2 nodes, Sys A and Sys B , each assigned with assigned address 192.168.1
 The Sys B hosts DBs and has a hostname "db". <br>
 If we ping the 2nd node from the 1st node as ```ping db``` rather than using its IP address, we will not get a response from the 2nd node.<br>
 To make the Sys A understand that whenever we reference to a hostname as DB it references to 192.168.1.11, within the Sys A, **/etc/hosts** file, must have an entry as below:<br>
+
 ```
 # cat /etc/hosts
 192.168.1.11          db
 ```
+
 The entry in the above file states that the 192.168.1.11 has a hostname to be referenced as "db". Whatever we put into the /etc/hosts the system will take for granted.<br>
 The Sys A does not check if the Sys B's hostname is Db or not. Now, lets say the hostname on Sys B is changed, but still the Sys A will be able to ping Sys B.<br>
 If within an /etc/hosts file, there are 2 different hostnames referencing to the same IP address, in this case Sys A, Sys A can reach Sys B as db or any other name set in the /etc/hosts file.<br>
+
 ```
 # cat /etc/hosts
 192.168.1.11          db
 192.168.1.11          www.google.com
 ```
+
 In the above case the node with IP address 192.168.1.11 will be reachable from Sys A as both db or www.google.com.<br>
 You can have as many host information as you want within the hosts file.<br>
 When any application or ping or ssh tries to reach a host, it will check into the /etc/hosts file, find the ip address of that host and reach it. This process of translating hostnames to IP addresses is called **"Name Resolution"**.<br>
-When within a small network, the above method works fine. However, if we need to work with a large number of nodes within a network, maintaining the information on every host and updates to the file as the IP changes are quite a 
-tedious task. This is where a DNS server comes in.<br>
+When within a small network, the above method works fine. However, if we need to work with a large number of nodes within a network, maintaining the information on every host and updates to the file as the IP changes are quite a tedious task. This is where a DNS server comes in.<br>
 The DNS server maintains the list of all hosts within the network and each node within the network can check with the DNS host and find the IP address, rather than having all the information within its /etc/hosts file.<br>
 Every node has a file **/etc/resolv.conf** which will contain the DNS host information, which the node can reach out to, to find the IP address of any node within a network.<br>
+
 ```
 # cat /etc/resolv.conf
 nameserver         192.168.1.100
 ```
-This information will need to be configured in each of the node within your network and when any node does not know the IP address of the node it wants to communicte to, it will check the /etc/resolv.conf file for the DNS nameserver 
-information and find it from there.<br>
+
+This information will need to be configured in each of the node within your network and when any node does not know the IP address of the node it wants to communicte to, it will check the** /etc/resolv.conf **file for the DNS nameserver information and find it from there.<br>
 Now, if the IP address of any of the hosts within the network changes, then just update the IP address in the DNS server and now any node to reach the updated node, can find the infomation from the DNS nameserver.<br>
 Now for one time or indiviual test needs a node can still refer to the /etc/hosts file for this information.<br>
 So a system is able to use host name to IP mapping from the /etc/hosts file locally as well as from a remote DNS server.<br>
@@ -286,6 +290,16 @@ We can then assign IP addresses to each of these namespaces.
 ```
 The above set up should have set the IP address to the virtual ethernet ports of the namespaces.
 Usually we may have more than a few virtual instances within each host and we would need each of these hosts to communicate with each other.
+To allow multiple instances within a server communicate with each other on their own ethernet addresses, we need to create a switch.
+In this case, our switch is a Bridge. To create a bridge:
+```
+# ip link add v-net-0 type bridge
+# ip link set dev v-net-0 up
+```
+The v-net-0 behaves like 
+a switch within the environment, allowing instances to communicate with each other.
+
+
 
 
 
