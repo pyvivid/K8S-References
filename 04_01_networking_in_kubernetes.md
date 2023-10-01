@@ -118,9 +118,8 @@ default          192.168.2.1     0.0.0.0         UG    0      0    0   eth0
 192.168.1.0      192.168.2.2     255.255.255.0   UG    0      0    0   eth0
 ubuntu $
 ```
-<br>
 ## DNS Basics:
-<br>
+
 We have 2 nodes, Sys A and Sys B , each assigned with assigned address 192.168.1.10 and 192.168.1.11 respectively. The nodes are pingable from each other.<br>
 The Sys B hosts DBs and has a hostname "db". <br>
 If we ping the 2nd node from the 1st node as ```ping db``` rather than using its IP address, we will not get a response from the 2nd node.<br>
