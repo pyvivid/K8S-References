@@ -11,7 +11,7 @@ With the **HOST** Network, the containers are attached to the host's network and
 If we deploy a web application listening on port 80 on the host, then no other container can use the same port for accepting incoming connections
 ### Option 3:
 With the **Bridge** network option, other than the eth0 a virtual network is created within the host, which the Docker containers can attach to.
-![p1](https://github.com/pyvivid/K8S-References/assets/94853400/d29bddcf-a418-45ba-88ff-10dfe24e68c0)
+![p1](https://github.com/pyvivid/K8S-References/assets/94853400/d29bddcf-a418-45ba-88ff-10dfe24e68c0)<br>
 Now, in the above bridge network, we can see that the bridge network is using the 172.17.0.0 network. All containers attaching to this network, will be assigned a similar IP address range.
 
 When Docker is installed on a host, an internal private network called Bridge is created by default.
@@ -60,7 +60,7 @@ Remember, the bridge in the ```# docker network ls``` command refers to the ```d
 Also note, the bridge is like an interface to the host, but acts like a switch the containers within the host.
 So, whenever a container is created, Docker creates a network namespace for it. We can view the network namespaces created using the command:
 ```# ip netns``` 
-
+When a container is created, we can inspect the docker container and see as below:
 
 
 
