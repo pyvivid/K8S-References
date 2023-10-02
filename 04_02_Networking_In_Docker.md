@@ -59,8 +59,72 @@ Basically what has happened is that, when the Docker was installed, a link was a
 Remember, the bridge in the ```# docker network ls``` command refers to the ```docker0``` on the host.
 Also note, the bridge is like an interface to the host, but acts like a switch the containers within the host.
 So, whenever a container is created, Docker creates a network namespace for it. We can view the network namespaces created using the command:
-```# ip netns``` 
+```
+# ip netns
+b3165c10a92b
+``` 
 When a container is created, we can inspect the docker container and see as below:
+```
+# docker inspect 97efg80e565d8
+NetworkSettings": {
+           "Bridge": "",
+           "SandboxID": "b3165c10a92b50edce4c8aa5f37273e180907ded31",
+           "SandboxKey": "/var/run/docker/netns/b3165c10a92b",
+```
+To further verify this(remember a virtual cable was created, connecting one end to the bridge and another to the container namespace).
+First run 
+```
+root@dock-ser:/home/ubuntu# ip link
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1460 qdisc mq state UP mode DEFAULT group default qlen 1000
+    link/ether 42:01:0a:80:00:14 brd ff:ff:ff:ff:ff:ff
+    altname enp0s4
+3: docker0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT group default 
+    link/ether 02:42:2f:72:92:a5 brd ff:ff:ff:ff:ff:ff
+5: **veth5e6a709@if4:** <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue **master docker0** state UP mode DEFAULT group default 
+    link/ether 12:9b:11:ea:dd:c3 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+```
+Notice the veth5e6a709@if4 was created and attached to the bridge of the Docker Network.
+Now if we run the 
+```
+# ip -n <netns_output> link
+7: eth0@if8: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT
+group default
+   link/ether 02:42:ac:11:00:03 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+```
+![p1](https://github.com/pyvivid/K8S-References/assets/94853400/6ce7c5d1-18e0-478f-a3c2-ddc12e2f225d)
+
+To view the IP address of the virtual port attached to the container:
+```
+# ip -n br3165c10a92b addr
+7: eth0@if8: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue
+state UP group default
+     link/ether 02:42:ac:11:00:03 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+     inet 172.17.0.3/16 brd 172.17.255.255 scope global eth0
+        valid_lft forever preferred_lft forever
+```
+The same procedure is replicated each time a container is created. Docker creates a namespace, creates a pair of interfaces, attaches one end to the container and another end to the bridge network.
+![p1](https://github.com/pyvivid/K8S-References/assets/94853400/bd0cdd84-36e6-4369-aa61-eabdbc6b86fb)
+
+Review the image carefully, the interface pairs can be identified by their number. The Bridge end interface has 9, while the container end had 10.
+Odd and even form a pair.
+Now yet the containers are not accessible from the outside world. To allow the containers to be accessible from the outside world, we use port mapping feature of the Docker.
+Lets say if you are running an nginx server, then you perform port mapping, like
+``` # docker run -itd --name nginx -p 8080:80 nginx```
+Tbe above command will map the port 8080 of the host to the port 80 of the container.
+
+
+
+
+
+
+     
+
+
+
+
+
 
 
 
