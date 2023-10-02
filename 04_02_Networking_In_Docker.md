@@ -1,3 +1,4 @@
+# <p style="text-align: center;">Understanding Docker Networking</p>
 
 Lets say we have a machine with Docker installed on it. The machine has 1 eth0 interface attached to it, with an ip address of 192.168.1.10.
 This machine is hosting a webserver, that is reachable on port 80. 
