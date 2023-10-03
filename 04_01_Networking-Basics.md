@@ -76,7 +76,6 @@ link/ether 52:54:00:00:00:0a brd ff:ff:ff:ff:ff:ff
  300556 3250 0 0 0 0
 ```
 
-
 To check if the communication between 2 systems are fine, a ping command will do, however, both the systems should be on the same network:<br>
 ```# ping <ip_addr_of_destination_host>```
 
@@ -123,6 +122,9 @@ Now, lets say, if we have 2 networks and we need to allow both the networks to c
 A router:
 + Allows to connect 2 networks together.
 + A router connects and presents itself as an individual device in each of the network it connects to and hence will have 2 IPs.
++ As in the above diagram, the router had 2 IP address
+   + 192.168.1.1
+   + 192.168.2.1
 + One IP assigned to it from each of the network it is connected to. The Idea is that the router acts like an individual device within each seperate network.<br>
 Remember, like the router there can be numerous other devices within the network.<br>
 Now as in the above diagram, lets say, System B(192.168.1.11) wants to communicate to System C(192.168.2.10).<br>
@@ -138,7 +140,7 @@ Destination      Gateway         Genmask         Flags Metric Ref    Use Iface
 ubuntu $
 ```
 You can see there are no entries and its currently holds no configuration.<br>
-The above is the kernel's routing table on every single machine within the networks.<br>
+The above is the kernel's routing table on every single machine within the networks. Machines within the same network only can commuincate with each other as of now.<br>
 Lets say we want the Sys B to communicate to SysC add the following route:<br>
 ```# ip route add 192.168.2.0/24 via 192.168.1.1```<br>
 The above command will let know the machines that to reach the machine in the 2.0 network, it has to travel via 192.168.1.1. <br>
@@ -181,7 +183,7 @@ Instead, we can say, like, if you do not know the route to any network use this 
 notice the default replaced by 0.0.0.0/0.<br>
 This way any request to any network, will be routed via the particular router on 192.168.2.1, which tells the machines in the 2.0 network, that for any communications to the outside world or other network, use the 192.168.2.1 gateway.<br>
 
-Let us say, you have multiple routers in your network, one for internal communications and one for internet, then you will need to have 2 seperate entries for each router.<br>
+Let us say, you have multiple routers in your network, one for internal communications and one for internet, then you will **need to have 2 seperate entries for each router**.<br>
 ![image](https://github.com/pyvivid/K8S-References/assets/94853400/d51d02a5-e73e-4455-9f3c-3dbcf81ce39d)<br>
 
 As in the above diagram, we need to have 2 entries as below:<br>
@@ -193,6 +195,28 @@ default          192.168.2.1     0.0.0.0         UG    0      0    0   eth0
 192.168.1.0      192.168.2.2     255.255.255.0   UG    0      0    0   eth0
 ubuntu $
 ```
+### Setting up a Linux host as a router:
+
+Let us say we have 3 hosts A, B and C. We will use host B as the router here.
+A and C each has 1 interface and B has 2 interfaces.
++ eth0 on A and eth0 on B are connected. A and B are connected on the 192.168.1.0 network.
++ eth0 on B and eth1 on B are connected. B and C are connected on the 192.168.2.0 network.
+
+**Now how do I get A to talk to C?**
+To enable A to talk to C, we have to follow a 2 step process here
+1. Let Host A know the route to C
+    ```# ip route add 192.168.2.0/24 via 192.168.1.6```
+2. Let Host C know the route to A
+   ```# ip route add 192.168.1.0/24 via 192.168.2.6```
+3. At this stage, when you try to ping C from A, you do not get any response, no failure error also, due to security reasons.
+4. Theres this file under ```/proc/sys/net/ipv4/ip_forward``` that needs to be updated to 1, to allow ip forwarding. Default value within the file will be 0, update to 1.
+   This is not a persistent setting.
+6. To allow communications between the two hosts, persistently, update the ```/etc/sysctl.conf``` file as below:
+   ```net.ipv4.ip_forward = 1```
+
+
+
+
 ## DNS Basics:
 
 We have 2 nodes, Sys A and Sys B , each assigned with assigned address 192.168.1.10 and 192.168.1.11 respectively. The nodes are pingable from each other.<br>
