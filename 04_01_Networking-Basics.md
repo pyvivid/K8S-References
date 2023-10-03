@@ -17,7 +17,7 @@ Network Interface names start with the type of Interface:
 The rest of the interface name after the type will depend on information provided by the server's firmware or location of the device in the PCI topology.
 + oN - Onboard device  - **eno1** = Onboard Ehternet Device 1.
 + sN - Indicates the PCI Slot number - **ens3** = Onbaord Ethernet Device in Slot 3
-+ pMsN - Indicates this is a PCI device on bus M, in slot N - wlp4s0 = WLAN card on PCI bus 4, slot 0
++ pMsN - Indicates this is a PCI device on bus M, in slot N - **wlp4s0** = WLAN card on PCI bus 4, slot 0
 
 NIC Devices with multiple ports 
 + enp0s1f0 - Indicates this device is on PCI bus 0, slot 1, function 0.
