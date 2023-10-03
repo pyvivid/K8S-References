@@ -1,6 +1,28 @@
-<h2 style="text-align: center;">Networking in Kubernetes - Prerequisites</h2>
+# Networking in Kubernetes - Prerequisites
 
 ## Networking Basics:
+
+Older Linux versions especially Red Hat, had a naming convention of eth0, eth1 and so on.<br>
+Usually eth0 is the first network detected during the boot. However, the PCIe standard does not guarantee that the first detected device will be eth0 on every reboot.<br>
+Newer versions of Linux OSes, instead of using the detection based naming system, names the interfaces based on
+1. Firmware
+2. PCI Bus Toplogy
+3. Type of Network Service
+
+Network Interface names start with the type of Interface:
++ Ethernet Interfaces start with en
++ WLAN Interfaces start with wl
++ WWAN Interfaces start with ww
+
+The rest of the interface name after the type will depend on information provided by the server's firmware or location of the device in the PCI topology.
++ oN - Onboard device  - **eno1** = Onboard Ehternet Device 1.
++ sN - Indicates the PCI Slot number - **ens3** = Onbaord Ethernet Device in Slot 3
++ pMsN - Indicates this is a PCI device on bus M, in slot N - wlp4s0 = WLAN card on PCI bus 4, slot 0
+
+NIC Devices with multiple ports 
++ enp0s1f0 - Indicates this device is on PCI bus 0, slot 1, function 0.
++ enp0s1f1 - Indicates this device is on PCI bus 0, slot 1, function 1.
+
 
 To check if the communication between 2 systems are fine, a ping command will do, however, both the systems should be on the same network:<br>
 ```# ping <ip_addr_of_destination_host>```
