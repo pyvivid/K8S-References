@@ -23,6 +23,48 @@ NIC Devices with multiple ports
 + enp0s1f0 - Indicates this device is on PCI bus 0, slot 1, function 0.
 + enp0s1f1 - Indicates this device is on PCI bus 0, slot 1, function 1.
 
+**List all ethernet Interfaces on the system:**
+```# ip link show```
+```
+[user@host ~]$ ip link show
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT
+ group default qlen 1000
+ link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT
+ group default qlen 1000
+ link/ether 52:54:00:00:00:0a brd ff:ff:ff:ff:ff:ff
+3: ens4: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP mode DEFAULT
+ group default qlen 1000
+ link/ether 52:54:00:00:00:1e brd ff:ff:ff:ff:ff:ff
+```
+In the above example, there are 3 network interfaces:
++ lo = Loopback interface, denoting the self
++ ens3 and ens4 = Indicates there are 2 ethernet ports on this device.
+
+The MAC address of the device is listed after link/ether for each interface. So you know that the network card with the MAC address 52:54:00:00:00:0a is the
+network interface ens3.
+
+List the interfaces and their IP addresses(note a single network interface can have multiple IPv4 or IPv6 addresses)
+```# ip addr show   ```
+```
+[user@host ~]$ ip addr show ens3
+2: ens3: <BROADCAST,MULTICAST, UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP
+ qlen 1000
+ link/ether 52:54:00:00:00:0b brd ff:ff:ff:ff:ff:ff
+ inet 192.0.2.2/24 brd 192.0.2.255 scope global ens3
+ valid_lft forever preferred_lft forever
+ inet6 2001:db8:0:1:5054:ff:fe00:b/64 scope global
+ valid_lft forever preferred_lft forever
+ inet6 fe80::5054:ff:fe00:b/64 scope link
+```
+```ens3: <BROADCAST,MULTICAST, UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP``` - Indicates the Interface is UP.<br>
+```link/ether 52:54:00:00:00:0b brd ff:ff:ff:ff:ff:ff``` - Indicates the MAC address of the port.<br>
+```inet 192.0.2.2/24 brd 192.0.2.255 scope global ens3``` - Inet, indicates that its a IPv4 address, with the network prefix and scope.<br>
+```inet6 2001:db8:0:1:5054:ff:fe00:b/64 scope global``` - Inet6, indicates the IPv6 address, with the network prefix and scope.<br>
+```inet6 fe80::5054:ff:fe00:b/64 scope link``` - This inet6 line shows that the interface has an IPv6 address of link scope that can only be
+used for communication on the local Ethernet link.<br>
+
+ 
 
 To check if the communication between 2 systems are fine, a ping command will do, however, both the systems should be on the same network:<br>
 ```# ping <ip_addr_of_destination_host>```
