@@ -44,7 +44,7 @@ In the above example, there are 3 network interfaces:
 The MAC address of the device is listed after link/ether for each interface. So you know that the network card with the MAC address 52:54:00:00:00:0a is the
 network interface ens3.
 
-List the interfaces and their IP addresses(note a single network interface can have multiple IPv4 or IPv6 addresses)
+**List the interfaces and their IP addresses(note a single network interface can have multiple IPv4 or IPv6 addresses):**
 ```# ip addr show   ```
 ```
 [user@host ~]$ ip addr show ens3
@@ -64,7 +64,18 @@ List the interfaces and their IP addresses(note a single network interface can h
 ```inet6 fe80::5054:ff:fe00:b/64 scope link``` - This inet6 line shows that the interface has an IPv6 address of link scope that can only be
 used for communication on the local Ethernet link.<br>
 
- 
+Display the Performance statistics of an ethernet port:
+```
+[user@host ~]$ ip -s link show ens3
+2: ens3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc pfifo_fast state UP qlen
+ 1000
+link/ether 52:54:00:00:00:0a brd ff:ff:ff:ff:ff:ff
+ RX: bytes packets errors dropped overrun mcast
+ 269850 2931 0 0 0 0
+ TX: bytes packets errors dropped carrier collsns
+ 300556 3250 0 0 0 0
+```
+
 
 To check if the communication between 2 systems are fine, a ping command will do, however, both the systems should be on the same network:<br>
 ```# ping <ip_addr_of_destination_host>```
