@@ -38,12 +38,12 @@ So first, let's plan what we are going to do.
 + Choose any private address range, say, 10.244.1, 10.244.2, and 10.244.3. Next, we set the IP address for the bridge interface.
 
 Next the steps to be performed on the containers:
-+ To attach a container to the network we need a pipe, or virtual network cable. We create that using the ip link add command.
++ To attach a container to the network we need a pipe, or virtual network cable. We create that using the ip link add command.<br>
   ```# ip link add ...```
-+ We then attach one end to the container, and another end to the bridge using
++ We then attach one end to the container, and another end to the bridge using<br>
  ```# ip link set ...```
-+ We then assign IP address using the ip addr command and add a route to the default gateway.
-  ```# ip -n <namepace> addr add ...```
++ We then assign IP address using the ip addr command and add a route to the default gateway.<br>
+  ```# ip -n <namepace> addr add ...```<br>
   ```# ip -n <namepace> route add ...```
-+ For now, we will assume the IP address of the container on the node1 as 10.244.1.2
++ For now, we will assume the IP address of the container on the node1 as 10.244.1.2<br>
 
