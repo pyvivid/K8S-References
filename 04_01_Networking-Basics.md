@@ -1,4 +1,4 @@
-# <p style="text-align: center;">Networking in Kubernetes - Prerequisites</p>
+<h2 style="text-align: center;">Networking in Kubernetes - Prerequisites</h2>
 
 ## Networking Basics:
 
