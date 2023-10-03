@@ -47,6 +47,3 @@ Next the steps to be performed on the containers:
   ```# ip -n <namepace> route add ...```
 + For now, we will assume the IP address of the container on the node1 as 10.244.1.2
 
-
-### CNI in Kubernetes
-
