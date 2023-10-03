@@ -34,6 +34,22 @@ daemonset.extensions/weave-net created
 ```
 The Weave peers are deployed as Daemon Sets, and the Daemonsets ensures that one Weave Pod is always running on all nodes at all times.
 
+## IP Address Management in Weave:
 
+Let us now focus on
+
++ How the virtual Bridge networks in the nodes assigned an IP subnet?
++ How pods are assigned an IP?
++ Where is this information stored?
++ Who is responsible for ensuring that no duplicate IPs are assigned?
+
+It is the responsibility of the CNI solutions to assign IP address to the containers.
+The core solution is to maintain a list of IPs already assigned to the containers, to ensure they are not duplicated. This is the responsibility of the CNI.
+The CNI comes with 2 plugins, which will take care of this task.
+1. host-local plugin:
+   + It is our responsibility to invoke that plugin.
+   + 
+2. 
+The CNI configuration file located at ```/etc/cni/net.d/net-script.conf``` file has the IPAM config, where we can specify the type of plugin, subnet and route to be used.<br>
 
 
