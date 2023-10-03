@@ -1,6 +1,5 @@
 # <p style="text-align: center;">Pod Networking in Kubernetes</p>
 
-
 After having configured our master and worker nodes and their networking, our Kubernetes cluster is soon going to have a large number of Pods and services running on it.
 The following are the challenges to be addressed:
 + How are the Pods addressed?
