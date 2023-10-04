@@ -448,7 +448,7 @@ This is all within the node, and we dont have access to the outside world.
 
 All access to the outside world, from the internal namespaces will be through the eth0 on the main node/host.<br>
 
-<img title="v-net-0 setup" alt="-v-net-setup" src="https://github.com/pyvivid/diagrams/blob/main/v-net-basics.png">
+![v-net-basics drawio](https://github.com/pyvivid/K8S-References/assets/94853400/55a2c252-c454-4722-82e5-5758a2b6ecac)
 
 Now, lets say the interface from the virtual instance/internal namespace wants to reach another physical server, then it looks at its routing table to find the route to that network.
 In this case, the interface on the host node of the virtual namespaces serves as the gateway to the outside world for the internal namespaces/virtual instances.
@@ -456,17 +456,9 @@ To view the route table of the blue namespaces:
 ```
 # ip netns exec blue ip route add 192.168.1.0/24 via 192.168.15.5
 Destination      Gateway         Genmask         Flags Metric Ref  Use Iface
-192.168.15.0     0.0.0.0         255.255.255.0   UG    0      0    0   veth-blue
+192.168.10.0     0.0.0.0         255.255.255.0   UG    0      0    0   veth-blue
 192.168.1.0      192.168.15.5    255.255.255.0   UG    0      0    0   veth-blue
 ```
-
-
-
-
-
-
-
-
 
 
 
