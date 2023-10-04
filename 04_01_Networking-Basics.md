@@ -251,7 +251,7 @@ Every node has a file **/etc/resolv.conf** which will contain the DNS host infor
 nameserver         192.168.1.100
 ```
 
-This information will need to be configured in each of the node within your network and when any node does not know the IP address of the node it wants to communicte to, it will check the** /etc/resolv.conf **file for the DNS nameserver information and find it from there.<br>
+This information will need to be configured in each of the node within your network and when any node does not know the IP address of the node it wants to communicte to, it will check the **/etc/resolv.conf** file for the DNS nameserver information and find it from there.<br>
 Now, if the IP address of any of the hosts within the network changes, then just update the IP address in the DNS server and now any node to reach the updated node, can find the infomation from the DNS nameserver.<br>
 Now for one time or indiviual test needs a node can still refer to the /etc/hosts file for this information.<br>
 So a system is able to use host name to IP mapping from the /etc/hosts file locally as well as from a remote DNS server.<br>
@@ -269,7 +269,7 @@ hosts:         files    dns
 ...
 ```
 With the above configuration, the node checking for the IP of the other node, will first check in the local hosts file and then the DNS.<br>
-If we switch the order of the "files dns" to "dns   files", the node will first check on dns first and then the local.<br>
+If we switch the order of the "files dns" to "dns   files", the node will first check on local /etc/hosts file and then the dns file, which is /etc/resolv.conf.<br>
 
 Additionally you can add another DNS server info in the /etc/resolv.conf file, like<br>
 ```
@@ -283,8 +283,7 @@ We can also have our DNS server, 192.168.1.100 configured to forward any unknown
 
 ## Understanding Domain Names:<br>
 
-**www.facebook.com** is a domain name.<br>
-Domain names allow us to remember the name of a company/service easily rather than the IP address. <br>
+**www.facebook.com** is a domain name.Domain names allow us to remember the name of a company/service easily rather than the IP address. <br>
 The last portion of the domain name ".com" = Top Level Domains. Other TLDs include .org, .net, .edu to name a few.<br>
 facebook = Assigned Domain Name<br>
 www = Sub Domain or maps.google.com = maps is a subdomain. A single domain have multiple subdomains associated with it.<br>
@@ -339,8 +338,10 @@ Address: 2404:6800:4007:815::2004
 
 ## Networking NameSpaces in Linux:<br>
 
-Just like system level namespaces, the network namespaces are used by containerization tools like Docker to implement network isolation of resources.<br>
-Each container, has its own interface and it can have its own Routing and ARP tables.<br>
+Just like system level namespaces, the network namespaces are used by containerization tools like Docker to implement **network isolation** of resources.<br>
+The host within which the containers are running have their own Ethernet Interfaces and their own IP addresses.
+When a new container is created on a host, it creates a network namespace for it, that way, it has no visibility to any other network information on the host or other containers within the host.<br>
+Each container within a host, has its own virtual interface and it can have its own Routing and ARP tables.<br>
 We can create network namespaces within a linux host as below:<br>
 ```
 # ip netns add red
@@ -349,14 +350,14 @@ We can create network namespaces within a linux host as below:<br>
 red
 blue
 ```
-TO view the link interfaces of a node, we can use the ```# ip link command```. Like wise, if I wanted to see the interface created by a network namespace, we can use:<br>
+To view the link interfaces of a node, we can use the ```# ip link``` command. Like wise, if I wanted to see the interface created by a network namespace, we can use:<br>
 ```
 # ip netns exec red ip link
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc state UNKNOWN mode DEFAULT group default qlen 1000
 link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
 ```
 What we see from above is that a loopback address of the network namespace is visible, however we cannot see the eth0 interface on the host.<br>
-So with namespaces, we have successfully prevented the container from seeing the host interface.<br>
+So with namespaces, we have successfully isolated and **prevented the container from seeing the host interface**.<br>
 Same is the case with the ARP and routing table. When running the ARP within the main host:<br>
 ```
 # arp
@@ -369,9 +370,10 @@ host01q          ether         02:42:ac:11:00:1c	C              etho
 Address          HwType        HwAddress            Flags  Mask    Iface
 ```
 <br>
-Now as of now, these network namespaces have no network connectivity, they have no interfaces of their own and they cannot see the underlying host network.<br>
-Two network namespaces can be connected to each other using a virtual ethernet cable called Pipe. It is a virtual cable with 2 interfaces on each of the ends.
-To connect them run the command:<br>
+As of now, these network namespaces have no network connectivity, they have no interfaces of their own and they cannot see the underlying host network.<br>
+To connect a network namespace to the underlying host or to connect two network namespaces we can create and use a virtual ethernet cable called Pipe.<br>
+The pipe acts like a virtual cable with 2 interfaces on each of the ends.
+To create a Pipe, we need to create with both the ends defined as below:
 
 ```# ip link add veth-red type veth peer name veth-blue```
 
@@ -380,6 +382,7 @@ The next step is to attach the interfaces to their respective namespaces.
 # ip link set veth-red netns red
 # ip link set veth-blue netns blue
 ```
+
 We can then assign IP addresses to each of these namespaces. 
 ```
 # ip -n red addr add 192.168.15.1 dev veth-red
@@ -387,9 +390,12 @@ We can then assign IP addresses to each of these namespaces.
 # ip netns exec red ping 192.168.15.2
 ```
 The above set up should have set the IP address to the virtual ethernet ports of the namespaces.<br>
-Usually we may have more than a few virtual instances within each host and we would need each of these hosts to communicate with each other.<br>
+The above set up also stands good when dealing with just 2 containers, however, usually we may have more than a few virtual instances within each host and we would need each of these hosts to communicate with each other.<br>
 To allow multiple instances within a server communicate with each other on their own ethernet addresses, we need to create a switch.<br>
-In this case, our switch is a Bridge. To create a bridge:<br>
+There are many apps which can do this for us, like
+1. Linux Bridge
+2. Open V-Switch
+In this case, our switch is a Linux Bridge. To create a bridge:<br>
 ```
 # ip link add v-net-0 type bridge
 # ip link set dev v-net-0 up
@@ -411,7 +417,7 @@ Now running the ip link command on the host, will display the bridge as an inter
    link/ether 06:9d:69:52:6f:61 brd ff:ff:ff:ff:ff:ff
 ```
 Now with the Bridge network in place, we can have the Virtual Instances connect to each other via the bridge.<br>
-So, we can now delete the eth0 interfaces, which we had created earlier. Deleting one veth, like veth-red, will also delete the veth-blue, sicne they are a pair.<br>
+So, we can now delete the eth0 interfaces, which we had created earlier. Deleting one veth, like veth-red, will also delete the veth-blue, since they are a pair.<br>
 ```# ip -n red link del veth-red```
 Now, we can create virtual connection the namespaces to the Bridge like:<br>
 ```# ip link add veth-red type veth peer name veth-red-br```
