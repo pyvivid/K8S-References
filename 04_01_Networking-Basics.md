@@ -419,9 +419,11 @@ Now running the ip link command on the host, will display the bridge as an inter
 Now with the Bridge network in place, we can have the Virtual Instances connect to each other via the bridge.<br>
 So, we can now delete the eth0 interfaces, which we had created earlier. Deleting one veth, like veth-red, will also delete the veth-blue, since they are a pair.<br>
 ```# ip -n red link del veth-red```
-Now, we can create virtual connection the namespaces to the Bridge like:<br>
+Now, we can create virtual connection from the network namespace to the Bridge like:<br>
+
 ```# ip link add veth-red type veth peer name veth-red-br```
 The veth-red is the interface on the namespace, while the veth-red-br is the interface on the switch within the switch.
+
 Repeat the same process for the blue interface also.
 Remember, we still have to attach the other end to the bridge network, which can be done by:
 ```
@@ -443,8 +445,10 @@ This is because, we haven't assigned an IP address to the bridge, so to do that:
 ```# ip addr add 192.168.10.5/24 dev v-net-0```
 Once the bridge is assigned an IP address, we should be able to ping the bridge from the host.
 This is all within the node, and we dont have access to the outside world. 
+
 All access to the outside world, from the internal namespaces will be through the eth0 on the main node/host.<br>
-![nw (1)](https://github.com/pyvivid/K8S-References/assets/94853400/c866b1cc-89d4-4fc7-98d2-f5437a7d7ca2)
+
+<img title="v-net-0 setup" alt="-v-net-setup" src="https://github.com/pyvivid/diagrams/blob/main/v-net-basics.png">
 
 Now, lets say the interface from the virtual instance/internal namespace wants to reach another physical server, then it looks at its routing table to find the route to that network.
 In this case, the interface on the host node of the virtual namespaces serves as the gateway to the outside world for the internal namespaces/virtual instances.
