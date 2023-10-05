@@ -1,14 +1,16 @@
 # <p style="text-align: center;">Understanding Docker Networking</p>
 
 Lets say we have a machine with Docker installed on it. The machine has 1 eth0 interface attached to it, with an ip address of 192.168.1.10.
-This machine is hosting a webserver, that is reachable on port 80. 
+This machine is hosting a webserver, that is reachable on po rt 80. 
 Now when hosting the Docker engine, we have multiple network options to use.
 
 ### Option 1:
-With the **NONE** network, the docker containers created within the host are not connected to any network, they cannot reach the outside world and are not reachable from the outside world.
+With the **NONE** network, the docker containers created within the host are not connected to any network, they cannot reach the outside world and are not reachable from the outside world. The container is not reachable internally or externally.
+
 ### Option 2:
-With the **HOST** Network, the containers are attached to the host's network and there is no isolation within the hosts container.
-If we deploy a web application listening on port 80 on the host, then no other container can use the same port for accepting incoming connections
+With the **HOST** Network, the containers are attached to the host's network and there is no isolation within the hosts container. There is no port mapping involved here.
+If we deploy a web application listening on port 80 on the host, then no other container can use the same port for accepting incoming connections.<br>
+
 ### Option 3:
 With the **Bridge** network option, other than the eth0 a virtual network is created within the host, which the Docker containers can attach to.
 ![p1](https://github.com/pyvivid/K8S-References/assets/94853400/d29bddcf-a418-45ba-88ff-10dfe24e68c0)<br>
@@ -24,7 +26,9 @@ b1033c189d63   host      host      local
 0b01716bc8c6   none      null      local
 ubuntu $ 
 ```
-This bridge network on the host is created as Docker0. List the interfaces on the host as below:
+**Note: This bridge network on the host is created as Docker0. **
+
+List the interfaces on the host as below:
 ```ruby
 ubuntu $ ifconfig
 docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
@@ -86,7 +90,7 @@ root@dock-ser:/home/ubuntu# ip link
     link/ether 12:9b:11:ea:dd:c3 brd ff:ff:ff:ff:ff:ff link-netnsid 0
 ```
 Notice the veth5e6a709@if4 was created and attached to the bridge of the Docker Network.
-Now if we run the 
+Now if we run the below command, we can see the other end attached to the pipe as below:
 ```
 # ip -n <netns_output> link
 7: eth0@if8: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP mode DEFAULT
@@ -104,12 +108,16 @@ state UP group default
      inet 172.17.0.3/16 brd 172.17.255.255 scope global eth0
         valid_lft forever preferred_lft forever
 ```
-The same procedure is replicated each time a container is created. Docker creates a namespace, creates a pair of interfaces, attaches one end to the container and another end to the bridge network.
+The same procedure is replicated each time a container is created. 
++ Docker creates a namespace
++ creates a pair of interfaces
++ attaches one end to the container and another end to the bridge network.
+  
 ![p1](https://github.com/pyvivid/K8S-References/assets/94853400/bd0cdd84-36e6-4369-aa61-eabdbc6b86fb)
 
 Review the image carefully, the interface pairs can be identified by their number. The Bridge end interface has 9, while the container end had 10.
 Odd and even form a pair.
-Now yet the containers are not accessible from the outside world. To allow the containers to be accessible from the outside world, we use port mapping feature of the Docker.
+Now the containers can communicate with each other, yet the containers are not accessible from the outside world. To allow the containers to be accessible from the outside world, we use port mapping feature of the Docker.
 Lets say if you are running an nginx server, then you perform port mapping, like
 ``` # docker run -itd --name nginx -p 8080:80 nginx```
 Tbe above command will map the port 8080 of the host to the port 80 of the container.
