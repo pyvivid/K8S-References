@@ -443,6 +443,7 @@ The node within which all the instances are running is currently on 192.168.1.2.
 Though the namespaces are within the node, the host will not be able to ping the IP addresses of the namespaces newly created on 192.168.10.1..4.
 This is because, we haven't assigned an IP address to the bridge, so to do that:
 ```# ip addr add 192.168.10.5/24 dev v-net-0```
+
 Once the bridge is assigned an IP address, we should be able to ping the bridge from the host.
 This is all within the node, and we dont have access to the outside world. 
 
@@ -454,11 +455,16 @@ Now, lets say the interface from the virtual instance/internal namespace wants t
 In this case, the interface on the host node of the virtual namespaces serves as the gateway to the outside world for the internal namespaces/virtual instances.
 To view the route table of the blue namespaces:
 ```
-# ip netns exec blue ip route add 192.168.1.0/24 via 192.168.15.5
+# ip netns exec blue ip route add 192.168.1.0/24 via 192.168.10.5
+# ip netns exec blue ip route 
 Destination      Gateway         Genmask         Flags Metric Ref  Use Iface
 192.168.10.0     0.0.0.0         255.255.255.0   UG    0      0    0   veth-blue
-192.168.1.0      192.168.15.5    255.255.255.0   UG    0      0    0   veth-blue
+192.168.1.0      192.168.10.5    255.255.255.0   UG    0      0    0   veth-blue
 ```
+At this point remember, our host has 2 IP addresses:
+1. 192.168.10.0 - Acting as a bridge connecting the containers
+2. 192.168.1.2 - Connecting to a wider local network.
+
 
 
 
