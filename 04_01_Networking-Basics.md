@@ -465,6 +465,11 @@ At this point remember, our host has 2 IP addresses:
 1. 192.168.10.0 - Acting as a bridge connecting the containers
 2. 192.168.1.2 - Connecting to a wider local network.
 
+At this point, we may be able to reach to the outside servers, however, we will not receive a return ping. To make this happen, we will need to add the NAT functionality.<br>
+**Note: 
+Masquerade allows mapping multiple IP addresses to a single IP address. We can use masquerade NAT to hide one or more IP addresses on your internal network behind an IP address that you want to make public.
+IP Tables: Iptables is a firewall application that works with Linux kernel. It controls incoming and outgoing traffic and provides a mechanism to filter, block, or allow traffic based on various criteria, such as port number, IP address, protocol, and more. Iptables is designed to protect system from unauthorized access and provide a secure environment for applications and services. **
+
 
 
 
