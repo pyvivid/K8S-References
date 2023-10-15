@@ -477,3 +477,18 @@ MAC Address is a unique physical address assigned to a specific port on the ethe
 Lets say computer A wants to communicate with computer B within a network and that Comp A already knows the IP address of the Comp B, but in order to communicate with the Comp B, it still needs the MAC address.
 IP address identifies a device on a NW within which the device is located, while the MAC address specifically points to the correct device in the Network. So now the Comp A, will check internally within its ARP cache, to see if it already has the MAC address of the IP address. If not present, then the Comp A, will send out a broadcast message to the network and ask to check for the specific IP address and ask for its MAC address. The computer that has the IP address, will respond back with the MAC address and once this information is received by Comp A, they start communicating with each other.
 This makes communication effecient, and the next time Comp A want to communicate with Comp , it does not have to send a broadcast address, but can look into the ARP cache.
+
+## IP Tables in Linux:
+
+In linux operating system, the firewalling is taken care of using netfilter. The netfilter is a kernel module that decides what packets are allowed to come in or to go outside.
+iptables are the interface to netfilter. Think of iptable as the frontend and the netfilter as the backend.
+
+
+
+3 important terms to remember in IP tables are
++ Tables
++ Chains
++ Rules
+
+
+
