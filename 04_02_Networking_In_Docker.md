@@ -114,7 +114,7 @@ The same procedure is replicated each time a container is created.
 + creates a pair of interfaces.
 + attaches one end to the container and another end to the bridge network.
   
-![p1](https://github.com/pyvivid/K8S-References/assets/94853400/bd0cdd84-36e6-4369-aa61-eabdbc6b86fb)
+![Picture1](https://github.com/pyvivid/K8S-References/assets/94853400/5c73e11c-a782-4cf6-bf21-588711fdd5a8)
 
 Review the image carefully, the interface pairs can be identified by their number. The Bridge end interface has 9, while the container end had 10.
 Odd and even form a pair.</br>
