@@ -358,7 +358,7 @@ link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
 ```
 What we see from above is that a loopback address of the network namespace is visible, however we cannot see the eth0 interface on the host.<br>
 So with namespaces, we have successfully isolated and **prevented the container from seeing the host interface**.<br>
-Same is the case with the ARP and routing table. When running the ARP within the main host:<br>
+Same is the case with the ARP and routing table. There is a detailed section on ARP tables below, do refer to familiarize. When running the ARP within the main host:<br>
 ```
 # arp
 Address          HwType        HwAddress            Flags  Mask    Iface
@@ -470,7 +470,10 @@ At this point, we may be able to reach to the outside servers, however, we will 
 Masquerade allows mapping multiple IP addresses to a single IP address. We can use masquerade NAT to hide one or more IP addresses on your internal network behind an IP address that you want to make public.
 IP Tables: Iptables is a firewall application that works with Linux kernel. It controls incoming and outgoing traffic and provides a mechanism to filter, block, or allow traffic based on various criteria, such as port number, IP address, protocol, and more. Iptables is designed to protect system from unauthorized access and provide a secure environment for applications and services. **
 
+## ARP Tables:
 
-
-
-
+ARP tables is the IP to MAC address resolution. 
+MAC Address is a unique physical address assigned to a specific port on the ethernet card. 
+Lets say computer A wants to communicate with computer B within a network and that Comp A already knows the IP address of the Comp B, but in order to communicate with the Comp B, it still needs the MAC address.
+IP address identifies a device on a NW within which the device is located, while the MAC address specifically points to the correct device in the Network. So now the Comp A, will check internally within its ARP cache, to see if it already has the MAC address of the IP address. If not present, then the Comp A, will send out a broadcast message to the network and ask to check for the specific IP address and ask for its MAC address. The computer that has the IP address, will respond back with the MAC address and once this information is received by Comp A, they start communicating with each other.
+This makes communication effecient, and the next time Comp A want to communicate with Comp , it does not have to send a broadcast address, but can look into the ARP cache.
