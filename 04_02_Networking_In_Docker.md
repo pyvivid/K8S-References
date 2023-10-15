@@ -1,22 +1,22 @@
 # <p style="text-align: center;">Understanding Docker Networking</p>
 
-Lets say we have a machine with Docker installed on it. The machine has 1 eth0 interface attached to it, with an ip address of 192.168.1.10.
+Lets say we have a server with Docker installed on it. The machine has 1 eth0 interface attached to it, with an ip address of 192.168.1.10.
 This machine is hosting a webserver, that is reachable on po rt 80. 
-Now when hosting the Docker engine, we have multiple network options to use.
+Now when hosting the Docker engine, we have multiple network options to use for the containers.
 
-### Option 1:
+### Option 1 - None Network:
 With the **NONE** network, the docker containers created within the host are not connected to any network, they cannot reach the outside world and are not reachable from the outside world. The container is not reachable internally or externally.
 
-### Option 2:
+### Option 2 - Host Network:
 With the **HOST** Network, the containers are attached to the host's network and there is no isolation within the hosts container. There is no port mapping involved here.
 If we deploy a web application listening on port 80 on the host, then no other container can use the same port for accepting incoming connections.<br>
 
-### Option 3:
+### Option 3 - Bridge Network:
 With the **Bridge** network option, other than the eth0 a virtual network is created within the host, which the Docker containers can attach to.
 ![p1](https://github.com/pyvivid/K8S-References/assets/94853400/d29bddcf-a418-45ba-88ff-10dfe24e68c0)<br>
 Now, in the above bridge network, we can see that the bridge network is using the 172.17.0.0 network. All containers attaching to this network, will be assigned a similar IP address range.
 
-When Docker is installed on a host, an internal private network called Bridge is created by default.
+When Docker is installed on a host, an internal private network called **Bridge** is created by default.
 This can be viewed by running the below command:
 ```ruby
 ubuntu $ docker network ls
@@ -89,7 +89,8 @@ root@dock-ser:/home/ubuntu# ip link
 5: **veth5e6a709@if4:** <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue **master docker0** state UP mode DEFAULT group default 
     link/ether 12:9b:11:ea:dd:c3 brd ff:ff:ff:ff:ff:ff link-netnsid 0
 ```
-Notice the veth5e6a709@if4 was created and attached to the bridge of the Docker Network.
+Notice the veth5e6a709@if4 was created and usual one end is attached to the Docker Network Bridge(to be understood like a virtual switch) and the other end is connected to the container as usual.
+Notice the output of ip link above at option 5, where one end is denoted as attached to the docker 0.
 Now if we run the below command, we can see the other end attached to the pipe as below:
 ```
 # ip -n <netns_output> link
@@ -109,18 +110,43 @@ state UP group default
         valid_lft forever preferred_lft forever
 ```
 The same procedure is replicated each time a container is created. 
-+ Docker creates a namespace
-+ creates a pair of interfaces
++ Docker creates a namespace.
++ creates a pair of interfaces.
 + attaches one end to the container and another end to the bridge network.
   
 ![p1](https://github.com/pyvivid/K8S-References/assets/94853400/bd0cdd84-36e6-4369-aa61-eabdbc6b86fb)
 
 Review the image carefully, the interface pairs can be identified by their number. The Bridge end interface has 9, while the container end had 10.
-Odd and even form a pair.
-Now the containers can communicate with each other, yet the containers are not accessible from the outside world. To allow the containers to be accessible from the outside world, we use port mapping feature of the Docker.
-Lets say if you are running an nginx server, then you perform port mapping, like
+Odd and even form a pair.</br>
+Now the containers can communicate with each other within the host and within the Docker network and yet the containers are not accessible from the outside world. To allow the containers to be accessible from the outside world, we use port mapping feature of the Docker.</br>
+Lets say if you are running an nginx server, then you perform port mapping, like</br>
 ``` # docker run -itd --name nginx -p 8080:80 nginx```
-Tbe above command will map the port 8080 of the host to the port 80 of the container.
+Tbe above command will map the port 8080 of the host to the port 80 of the container. If fro within the host, we try to access the nginx container which we spin up earlier, we should be getting a response from the nginx server. However, if you tro access the container from outside the host, it will not be reachable.</br>
+This is where the port mapping feature comes in. Notice the -p 8080:80 option used, where the incoming connecting to the port 8080 of the host are routed to the port 80 of the container running the nginx server.</br>
+
+The NAT rules are created using iptables to achieve the above of routing traffic from 8080 to 80. The iptables rule should look similar to as below:
+```
+iptables \
+  –t nat \
+  -A PREROUTING \
+  -j DNAT \
+  --dport 8080 \
+  --to-destination 172.17.0.3:80
+```
+We can list and check on the iptables as below:
+```
+# iptables -nvL -t nat
+Chain DOCKER (2 references)
+target	prot opt source                destination
+RETURN  all	--	anywhere       anywhere
+DNAYT   tcp	--	anywhere       anywhere           tcp dpt:8080 to 172.17.0.2:80
+```
+             
+
+
+
+
+
 
 
 
