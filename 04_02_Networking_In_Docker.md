@@ -120,7 +120,7 @@ Review the image carefully, the interface pairs can be identified by their numbe
 Odd and even form a pair.</br>
 Now the containers can communicate with each other within the host and within the Docker network and yet the containers are not accessible from the outside world. To allow the containers to be accessible from the outside world, we use port mapping feature of the Docker.</br>
 Lets say if you are running an nginx server, then you perform port mapping, like</br>
-``` # docker run -itd --name nginx -p 8080:80 nginx```
+``` # docker run -itd --name nginx -p 8080:80 nginx```</br>
 Tbe above command will map the port 8080 of the host to the port 80 of the container. If fro within the host, we try to access the nginx container which we spin up earlier, we should be getting a response from the nginx server. However, if you tro access the container from outside the host, it will not be reachable.</br>
 This is where the port mapping feature comes in. Notice the -p 8080:80 option used, where the incoming connecting to the port 8080 of the host are routed to the port 80 of the container running the nginx server.</br>
 
