@@ -98,7 +98,7 @@ Now if we run the below command, we can see the other end attached to the pipe a
 group default
    link/ether 02:42:ac:11:00:03 brd ff:ff:ff:ff:ff:ff link-netnsid 0
 ```
-![p1](https://github.com/pyvivid/K8S-References/assets/94853400/6ce7c5d1-18e0-478f-a3c2-ddc12e2f225d)
+![Picture1](https://github.com/pyvivid/K8S-References/assets/94853400/01c904f1-d129-4ca6-ab18-e64b3844619b)
 
 To view the IP address of the virtual port attached to the container:
 ```
