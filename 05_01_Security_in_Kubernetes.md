@@ -54,4 +54,4 @@ We still need some sort of a Authentication mechanism to allow or disallow users
    + To access the KubeAPI server, using the token as creds, use a command as below:
    + ```# curl -v -k https://master-node-ip:6443/api/v1/pods --header "Authorization: Bearer Kpjijijfs78dsnjUc48i"```
 4. authentication using certificates.</br>
-
+   + TLS explanations are in detail in another section. Read that section, if you are new to TLS. Link is here
