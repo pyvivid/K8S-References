@@ -62,9 +62,18 @@ When the user first accesses the webserver, the Public Keys --> Sent to User's B
 At the browser end, the Symmetric key is encrypted using the Public keys that was received by the browser. Now data returns back to server.</br>
 At the server end, there is the private key to decrypt the browser's symmetric keys received. </br>
 So, in the whole transation, the sniffer, gets the public key, encrypted private keys of the user. But not the private keys of the public key to decrypt the user's symmetric keys.</br>
-Now the server also has the user's browser's symmetric keys. All communications from hereon are encrypted.
-So now this is basically a 2 step process:
-1. We used Asymmetric method to securely receive the user's symmetric keys.
+Now the server also has the user's browser's symmetric keys. All communications from hereon are encrypted.</br>
+So now this is basically a 2 step process:</br>
+1. We used Asymmetric method to securely receive the user's symmetric keys.</br>
 2. Once the server has the user's symmetric keys, all communications are now safely encrypted.
 
-Impotant point to note here is that, the server actually send only a certifictate in digital format issued to the public key of the server.
+Impotant point to note here is that, the server actually send only a certifictate in digital format issued to the public key of the server.</br>
+
+## TLS in K8S:</br>
+
+Basically in a TLS authenication mechanism, there are 3 types of certificates being used:</br>
+1. Server certificates configured for Servers.
+2. Root Certificates configured on CA(Certificate Authority) servers.
+3. Client Certificates configured on Clients.</br>
+
+
