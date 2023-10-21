@@ -13,7 +13,7 @@ There are 2 types of encryption of the data being transferred between a user and
 
 The ssh keys that are generated are usually stored under the ".ssh" directory of the user.</br>
 
-On any linux server, run the command:
+On any linux server, run the command:</br>
 ```
 ubuntu@dock-ser:~$ ssh-keygen
 Generating public/private rsa key pair.
@@ -52,3 +52,19 @@ xq+He2aQeF/ZR2vkDXH1Q+v5IWnfw1jpYo+itr4rGDjEHSPDgKFupKltvFsn8iML+pFrLA+XzDKAP/X5
 gDP6rsdEmprhWQjWOfs//mBhx1g+fa1YD1ZL9spzgVIz0cHv+bI3uW4ePGS3RBhnASXSomraE8Hjo69gfJ63TT8rdwSuaEFe98pKsk= username@servername
 
 ```
+</br>
+In realtime, both the symmetric and Asymmetric keys are used together to form a tight secure data transfer mechanism. The Public + Private Key pair is generated on the server, not using the ssh-key-gen but as below:</br>
+```
+# openssl genrsa --out my-keys.keys 1024
+# opensll genrsa -in my-keys.key -pubout > mybank.pem
+```</br>
+When the user first accesses the webserver, the Public Keys --> Sent to User's Browser.</br>
+At the browser end, the Symmetric key is encrypted using the Public keys that was received by the browser. Now data returns back to server.</br>
+At the server end, there is the private key to decrypt the browser's symmetric keys received. </br>
+So, in the whole transation, the sniffer, gets the public key, encrypted private keys of the user. But not the private keys of the public key to decrypt the user's symmetric keys.</br>
+Now the server also has the user's browser's symmetric keys. All communications from hereon are encrypted.
+So now this is basically a 2 step process:
+1. We used Asymmetric method to securely receive the user's symmetric keys.
+2. Once the server has the user's symmetric keys, all communications are now safely encrypted.
+
+Impotant point to note here is that, the server actually send only a certifictate in digital format issued to the public key of the server.
