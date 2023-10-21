@@ -2,15 +2,16 @@
 
 ## Understanding SSL TLS Certificates
 
-A certificate is used to guarantee trust between two parties during a transaction.</b>
-For example, when a user tries to access a web server, TLS certificates ensure that the communication between the user and the server is encrypted and the server is who it says it is.</br></b>
-There are 2 types of encryption of the data being transferred between a user and the server:</b>
-1.** Symmetric Encryption** = Data and Keys are sent over network and the network sniffer can catch both and decrypt the information. Not a secure method.</b>
-2. **Asymmetric Encryption** - Commonly used passwordless authentication to servers = Uses a set/pair of private and public keys. The Public keys are situated on the server and the user sending data, send their private keys embedded within it. When a right private key is provided then the user is allowed access to the data/server.</b>
+A certificate is used to guarantee trust between two parties during a transaction.</br>
+For example, when a user tries to access a web server, TLS certificates ensure that the communication between the user and the server is encrypted and the server is who it says it is.</br>
+There are 2 types of encryption of the data being transferred between a user and the server:</br>
+
+1.** Symmetric Encryption** = Data and Keys are sent over network and the network sniffer can catch both and decrypt the information. Not a secure method.</br>
+2. **Asymmetric Encryption** - Commonly used passwordless authentication to servers = Uses a set/pair of private and public keys. The Public keys are situated on the server and the user sending data, send their private keys embedded within it. When a right private key is provided then the user is allowed access to the data/server.</br>
 
 ## Creating a Public and Private SSH keys:
 
-The ssh keys that are generated are usually stored under the ".ssh" directory of the user.
+The ssh keys that are generated are usually stored under the ".ssh" directory of the user.</br>
 
 On any linux server, run the command:
 ```
