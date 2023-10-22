@@ -179,3 +179,7 @@ The ETCD server communicates only with KubeAPI server. The KubeAPI server acts a
 
 ![certificate-holders](https://github.com/pyvivid/K8S-References/assets/94853400/29cd98b9-da68-452b-b96f-da2a6aa3dc33)
 
+Kubernetes Cluster requires, at least one certificate authority for your cluster.
+The CA within the cluster will also have its own 
++ CA.crt
++ CA.key
