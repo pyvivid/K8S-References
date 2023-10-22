@@ -128,8 +128,54 @@ Impotant point to note here is that, the server actually send only a certifictat
 ## TLS in K8S:</br>
 
 Basically in a TLS authenication mechanism, there are 3 types of certificates being used:</br>
-1. Server certificates configured for Servers.
+1. Server certificates configured on Servers.
 2. Root Certificates configured on CA(Certificate Authority) servers.
 3. Client Certificates configured on Clients.</br>
 
+| Public Key extensions | Private Key extensions |
+|-----------------------|------------------------|
+| .crt                  | .key                   |
+| .pem                  | .key.pem               |
+
+As we already know, the kubernetes cluster consists of Master and Worker Nodes.
++ There needs to be secure communication between each of these nodes and the services within these nodes.
+The communication between all the users and services and clients needs to be secure. For example, an administrator interacting with the kubernetes cluster using the kubectl utility or while accessing the kubernetes API directly must be secured using a TLS encryptions.
+The communication within the kubernetes cluster also needs to be secured.
+With the above requirements in place, we need to ensure that all the various services within the cluster use server certificates and the client uses client certificates.
+
+### Server Certificate Components:
+
+Kube-API Server = This service is used by all users as well as APIs to interact with the cluster. This server requires a 
++ apiserver.crt
++ apiserver.key
+
+ETCD server = Stores all info about the cluster within it.
++ etcdserver.crt
++ etcdserver.key
+
+Kubelet server = Kube API server interacts with the Kubelet.
++ kubelet.cert
++ kubelet.key
+
+### Client Certficate Components:
+
+Administrators access the kubeAPI server through the kubectl commands.The KubeAPI server needs to validate that the Admin is the one access it.
++ admin.crt
++ admin.key
+
+Scheduler talks to the KubeAPI server. The KubeAPI server needs to ensure that the scheduler is the once accessing it.
++ scheduler.crt
++ scheduler.key
+
+Kube Controller Manager is another client that accesses the kubeAPI server.
++ controller-manager.crt
++ controller-manager.key
+
+kube-proxy talks to the KubeAPI server and needs to authenticate.
++ kubeproxy.crt
++ kubeproxy.key
+
+The ETCD server communicates only with KubeAPI server. The KubeAPI server acts as a client.</br>
+
+![certificate-holders](https://github.com/pyvivid/K8S-References/assets/94853400/29cd98b9-da68-452b-b96f-da2a6aa3dc33)
 
