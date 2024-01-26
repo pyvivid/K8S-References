@@ -1,3 +1,4 @@
+# Configuring a PV on AWS EBS
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -7,6 +8,6 @@ spec:
     storage: 1Gi
   accessModes:
     - ReadWriteOnce
-awsElasticBlockStore:
+ awsElasticBlockStore:
   volumeID: <volume-ID>
   fstype: ext4
